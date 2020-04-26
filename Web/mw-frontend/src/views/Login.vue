@@ -51,8 +51,16 @@ export default {
     },
     methods: {
         login() {
-            this.$store.dispatch('Login')
-            this.$router.push('/')
+            const date = {
+                lang: this.$i18n.locale,
+                email: this.email,
+                password: this.password
+            }
+            this.$store.dispatch('Login', date)
+            .then(() => {
+                this.$router.push('/')
+            })
+            .catch(err => console.log(err))
         }
     },
     validations: {
@@ -165,6 +173,7 @@ export default {
         width: 80%;
         position:fixed;
         overflow: hidden;
+        z-index: 2;
     }
 }
 @media screen and (max-width: 900px) {
@@ -172,6 +181,7 @@ export default {
         width: 90%;
         position:fixed;
         overflow: hidden;
+        z-index: 2;
         .login-title {
             padding: 0px;
         }

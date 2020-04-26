@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Settings v-if="login"></Settings>
     <Loading v-if="loading"></Loading>
+    <Settings v-if="login"></Settings>
     <div v-if="login" id="nav">
       <router-link :to="`/${$i18n.locale}`">Home</router-link> |
       <router-link :to="`/${$i18n.locale}/about`">About</router-link> |
