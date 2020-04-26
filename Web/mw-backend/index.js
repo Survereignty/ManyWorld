@@ -2,16 +2,15 @@ const express     = require("express");
 const app         = express();
 const json        = express.json();
 
+const getPage     = require("./routes/getPage")
+
 const readline     	= require("readline");
 const r1         	= readline.createInterface({
   input:     process.stdin,
   output:    process.stdout
 });
 
-const test = {
-    email : "vlad@gmail.com",
-    password : "333222"
-}
+const PORT = process.env.PORT || 3000;
 
 const errorList = {
 	enTrueAut	: "The request was successful",
@@ -22,14 +21,9 @@ const errorList = {
 
 // const bcrypt = require("bcrypt");
 
-const MongoClient = require('mongodb').MongoClient;
-
-
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/index.html")
-});
+app.use(getPage);
 
 app.options('*', (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
@@ -69,7 +63,6 @@ app.post("/authorization", json, (req, res) =>{
 
 })
 
-app.listen(3000);
 
 r1.on("line", (input) => {
     if (input.toLowerCase() == "закрыть" || input.toLowerCase() == "завершить")
@@ -79,4 +72,6 @@ r1.on("line", (input) => {
         }
 })
 
-console.log("___ \nПриложение запущено хозяин! \n___");
+app.listen(PORT, () => {
+    console.log("___ \nПриложение запущено хозяин! \n___");
+});
