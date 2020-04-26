@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     login: false,
-    loading: false
+    loading: false,
+    error: false,
+    errorMassage: ''
   },
   mutations: {
     changeLoginTrue() {
@@ -20,15 +23,40 @@ export default new Vuex.Store({
     },
     changeLoadingFalse() {
       this.state.loading = false
+    },
+    changeErrorTrue() {
+      this.state.error = true
+    },
+    changeErrorFalse() {
+      this.state.error = false
     }
   },
   actions: {
-    Login ({commit}) {
+    async Login ({commit}, {lang, email, password}) {
       commit('changeLoadingTrue')
-      setTimeout(() => {
-        commit('changeLoginTrue')
+      await Vue.http.post('http://192.168.1.242:3000/authorization', {
+        lang,
+        email,
+        password
+      })
+      .then(response => {
+        if (response.body.result) {
+          commit('changeLoginTrue')
+          commit('changeLoadingFalse')
+        } else {
+          commit('changeErrorTrue')
+          this.state.errorMassage = response.body.massage
+          commit('changeLoadingFalse')
+        }
+      })
+      .catch(error => {
+        commit('changeErrorTrue')
+        this.state.errorMassage = error
         commit('changeLoadingFalse')
-      }, 1000)
+      })
+    },
+    CloseError({commit}) {
+      commit('changeErrorFalse')
     }
   },
   modules: {
