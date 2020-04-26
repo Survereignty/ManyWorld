@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Loading v-if="loading"></Loading>
+    <Error v-if="error"></Error>
     <Settings v-if="login"></Settings>
     <div v-if="login" id="nav">
       <router-link :to="`/${$i18n.locale}`">Home</router-link> |
@@ -14,11 +15,13 @@
 <script>
 import Settings from '@/components/Settings/Settings.vue'
 import Loading from '@/components/Loading.vue'
+import Error from '@/components/Error.vue'
 
 export default {
   components: {
     Settings,
-    Loading
+    Loading,
+    Error
   },
   computed: {
     login() {
@@ -26,6 +29,9 @@ export default {
     },
     loading() {
       return this.$store.state.loading
+    },
+    error() {
+      return this.$store.state.error
     }
   }
 }

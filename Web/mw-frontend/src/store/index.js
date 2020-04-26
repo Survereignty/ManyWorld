@@ -29,15 +29,12 @@ export default new Vuex.Store({
     },
     changeErrorFalse() {
       this.state.error = false
-    },
-    SetErrorMassage(text) {
-      this.state.errorMassage = text
     }
   },
   actions: {
     async Login ({commit}, {lang, email, password}) {
       commit('changeLoadingTrue')
-      await Vue.http.post('http://127.0.0.1:3000/authorization', {
+      await Vue.http.post('http://192.168.1.242:3000/authorization', {
         lang,
         email,
         password
@@ -48,15 +45,18 @@ export default new Vuex.Store({
           commit('changeLoadingFalse')
         } else {
           commit('changeErrorTrue')
-          commit('SetErrorMassage', response.body.massage)
+          this.state.errorMassage = response.body.massage
           commit('changeLoadingFalse')
         }
       })
       .catch(error => {
         commit('changeErrorTrue')
-        commit('SetErrorMassage', error)
+        this.state.errorMassage = error
         commit('changeLoadingFalse')
       })
+    },
+    CloseError({commit}) {
+      commit('changeErrorFalse')
     }
   },
   modules: {

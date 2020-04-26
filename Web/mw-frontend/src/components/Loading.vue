@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .back-drop {
         z-index: 3;
         position: fixed;

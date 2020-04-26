@@ -45,8 +45,8 @@ export default {
     name: 'Login',
     data () {
         return {
-            email: '123@mail.ru',
-            password: '123123123'
+            email: 'vlad@gmail.com',
+            password: '333222'
         }
     },
     methods: {
@@ -58,9 +58,8 @@ export default {
             }
             this.$store.dispatch('Login', date)
             .then(() => {
-                this.$router.push('/')
+                if(this.$store.state.login) this.$router.push('/')
             })
-            .catch(err => console.log(err))
         }
     },
     validations: {
@@ -93,7 +92,7 @@ export default {
 }
 </i18n>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .login-card {
         display: flex;
         flex-direction: column;
@@ -172,7 +171,6 @@ export default {
     .login-card {
         width: 80%;
         position:fixed;
-        overflow: hidden;
         z-index: 2;
     }
 }
@@ -180,7 +178,6 @@ export default {
     .login-card {
         width: 90%;
         position:fixed;
-        overflow: hidden;
         z-index: 2;
         .login-title {
             padding: 0px;

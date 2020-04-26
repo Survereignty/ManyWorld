@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .settings {
     display: flex;
     position: absolute;
