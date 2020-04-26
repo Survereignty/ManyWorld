@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <Settings></Settings>
-    <div id="nav">
+    <Settings v-if="login"></Settings>
+    <Loading v-if="loading"></Loading>
+    <div v-if="login" id="nav">
       <router-link :to="`/${$i18n.locale}`">Home</router-link> |
-      <router-link :to="`/${$i18n.locale}/about`">About</router-link>
+      <router-link :to="`/${$i18n.locale}/about`">About</router-link> |
+      <router-link :to="`/${$i18n.locale}/login`">Login</router-link>
     </div>
     <router-view/>
   </div>
@@ -11,10 +13,20 @@
 
 <script>
 import Settings from '@/components/Settings/Settings.vue'
+import Loading from '@/components/Loading.vue'
 
 export default {
   components: {
-    Settings
+    Settings,
+    Loading
+  },
+  computed: {
+    login() {
+      return this.$store.state.login
+    },
+    loading() {
+      return this.$store.state.loading
+    }
   }
 }
 </script>

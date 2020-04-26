@@ -1,31 +1,68 @@
 <template>
     <div class="login-card">
         <div class="login-title">
-                Вход
+                {{$t('title')}}
         </div>
-        <div class="login-form">
+        <form class="login-form" @submit.prevent="login">
             <div class="login-row">
-                <label for="login">Login</label>
-                <input id="login" v-model.lazy="login" type="text">
+                <label for="email">{{$t('email')}}</label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    :class="{'is-invalid' : $v.email.$error}"
+                    @input="$v.email.$touch()"
+                    v-model="email"
+                >
             </div>
             <div class="login-row">
-                <label for="password">Пароль</label>
-                <input id="password" v-model.lazy="password" type="password">
+                <label for="password">{{$t('password')}}</label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    :class="{'is-invalid' : $v.password.$error}"
+                    @input="$v.password.$touch()"
+                    v-model="password"
+                >
             </div>
             <div class="login-row">
-                <button>Далее</button>
+                <button
+                    type="submit"
+                    :disabled="$v.$invalid"
+                >
+                {{$t('next')}}
+                </button>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 
 <script>
+import {required, email, minLength} from 'vuelidate/lib/validators'
+
 export default {
     name: 'Login',
     data () {
         return {
-            login: '',
-            password: ''
+            email: '123@mail.ru',
+            password: '123123123'
+        }
+    },
+    methods: {
+        login() {
+            this.$store.dispatch('Login')
+            this.$router.push('/')
+        }
+    },
+    validations: {
+        email: {
+            required,
+            email
+        },
+        password: {
+            required,
+            minLength: minLength(6)
         }
     }
 }
@@ -33,12 +70,18 @@ export default {
 
 <i18n>
 {
-  "en": {
-    "title": "Login"
-  },
-  "ru": {
-    "title": "Вход"
-  }
+    "en": {
+        "title": "Login",
+        "email": "Email",
+        "password": "Password",
+        "next": "Next"
+    },
+    "ru": {
+        "title": "Вход",
+        "email": "Почта",
+        "password": "Пароль",
+        "next": "Далее"
+    }
 }
 </i18n>
 
@@ -50,13 +93,13 @@ export default {
         border-radius: 5px;
         padding: 30px;
         background: #121212;
-        box-shadow: 0 16px 16px -16px rgba(0,0,0,.7);
+        box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,1);
         border: 1px solid #1d1d1d;
         font-family: -apple-system,Ubuntu,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
         .login-title {
             padding-bottom: 30px;
             font-weight: 700;
-            font-size: 24px;
+            font-size: 28px;
         }
         .login-form {
         display: inherit;
@@ -66,6 +109,12 @@ export default {
                 display: inherit;
                 flex-direction: inherit;
                 padding: 20px;
+                .invalid-feedback {
+                    color:rgb(170, 0, 0);
+                }
+                .is-invalid {
+                    border: 1px solid rgb(170, 0, 0);
+                }
                 label {
                     font-weight: 500;
                     font-size: 20px;
@@ -74,10 +123,22 @@ export default {
                 input {
                     color: #f9f9f9;
                     background: #252525;
-                    border: none;
+                    border: 1px solid #252525;
                     border-radius: 5px;
                     font-size: 20px;
                     padding: 10px;
+                    box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,1);
+                }
+                button[disabled] {
+                    background: #414644;
+                    color: #5c5c5c;
+                    cursor: default;
+                    &:hover {
+                        background: #414644;
+                    }
+                    &:active {
+                        background: #414644;
+                    }
                 }
                 button {
                     font-weight: 600;
@@ -87,6 +148,7 @@ export default {
                     border-radius: 5px;
                     font-size: 20px;
                     padding: 10px 20px 10px 20px;
+                    box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
                     cursor: pointer;
                     &:hover {
                         background: #5ce2a6;
@@ -98,4 +160,26 @@ export default {
             }
         }
     }
+@media screen and (max-width: 600px) {
+    .login-card {
+        width: 80%;
+        position:fixed;
+        overflow: hidden;
+    }
+}
+@media screen and (max-width: 900px) {
+    .login-card {
+        width: 90%;
+        position:fixed;
+        overflow: hidden;
+        .login-title {
+            padding: 0px;
+        }
+        .login-form {
+            .login-row {
+                padding: 10px;
+            }
+        }
+    }
+}
 </style>
