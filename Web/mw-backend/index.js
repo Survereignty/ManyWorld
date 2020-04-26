@@ -1,19 +1,26 @@
-const express 	= require("express");
-const app 		= express();
-const json 		= express.json();
+const express     = require("express");
+const app         = express();
+const json        = express.json();
 
-const readline 	= require("readline");
-const r1 		= readline.createInterface({
-  input: 	process.stdin,
-  output: 	process.stdout
+const readline     	= require("readline");
+const r1         	= readline.createInterface({
+  input:     process.stdin,
+  output:    process.stdout
 });
 
 const test = {
-	email : "vlad@gmail.com",
-	password : "333222"
+    email : "vlad@gmail.com",
+    password : "333222"
 }
 
-const bcrypt = require("bcrypt");
+const errorList = {
+	enTrueAut	: "The request was successful",
+	ruTrueAut	: "Запрос прошел успешно",
+	enFalseAut 	: "Invalid email or password",
+	ruFalseAut 	: "Не верные email или пароль"
+} 
+
+// const bcrypt = require("bcrypt");
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -21,37 +28,55 @@ const MongoClient = require('mongodb').MongoClient;
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-	res.sendFile(__dirname + "/public/index.html")
+    res.sendFile(__dirname + "/public/index.html")
 });
 
-app.use((req, res, next) => {
-	if (!request.body) return response.sendStatus(400);
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, application/json;charset=utf-8');
-    next();
-
-    app.options('*', (req, res) => {        
-    	res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
-        res.send();
-    });
-})
+app.options('*', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.send('ok');
+});
 
 app.post("/authorization", json, (req, res) =>{
-	if(	req.body.email 	== test.email && 
-		req.body.password == test.password) 
-		res.send(1);
-	else res.send(0);
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+  
+    if(req.body.email == test.email &&
+       req.body.password == test.password)
+        
+        if(req.body.lang == "ru") 
+        	res.json({
+            	result  : true,
+            	massage : errorList.ruTrueAut
+        	});
+    	else 
+    		res.json({
+            	result  : true,
+            	massage : errorList.enFalseAut
+        	});
+    else 
+    	if(req.body.lang == "ru")	
+    		res.json({
+            	result  : false,
+            	massage : errorList.ruFalseAut
+        	});
+    	else 
+    		res.json({
+            	result  : false,
+            	massage : errorList.enFalseAut
+        	});
+
 })
 
 app.listen(3000);
 
 r1.on("line", (input) => {
-	if (input.toLowerCase() == "закрыть" || input.toLowerCase() == "завершить")
-		{
-			console.log("___ \nХорошего дня, хозяин!");
-			process.exit();
-		}
+    if (input.toLowerCase() == "закрыть" || input.toLowerCase() == "завершить")
+        {
+            console.log("___ \nХорошего дня, хозяин! \n___");
+            process.exit();
+        }
 })
 
-console.log("Приложение запущено хозяин! \n___");
-
+console.log("___ \nПриложение запущено хозяин! \n___");
