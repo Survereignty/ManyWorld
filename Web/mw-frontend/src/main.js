@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
+import Vuelidate from 'vuelidate'
+import VueResource from 'vue-resource'
 import store from './store'
 import i18n from './i18n'
 
@@ -16,6 +18,9 @@ router.beforeEach((to, from, next) => {
   i18n.locale = language
   next()
 })
+
+Vue.use(Vuelidate);
+Vue.use(VueResource);
 
 new Vue({
   router,
