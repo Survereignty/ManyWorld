@@ -24,6 +24,18 @@ app.get("/", (req, res) => {
 	res.sendFile(__dirname + "/public/index.html")
 });
 
+app.use((req, res, next) => {
+	if (!request.body) return response.sendStatus(400);
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, application/json;charset=utf-8');
+    next();
+
+    app.options('*', (req, res) => {        
+    	res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+        res.send();
+    });
+})
+
 app.post("/authorization", json, (req, res) =>{
 	if(	req.body.email 	== test.email && 
 		req.body.password == test.password) 
