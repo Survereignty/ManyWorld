@@ -34,7 +34,7 @@ export default new Vuex.Store({
   actions: {
     async Login ({commit}, {lang, email, password}) {
       commit('changeLoadingTrue')
-      await Vue.http.post('http://192.168.1.242:3000/authorization', {
+      await Vue.http.post('http://localhost:3000/authorization', {
         lang,
         email,
         password

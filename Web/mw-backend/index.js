@@ -2,7 +2,8 @@ const express     = require("express");
 const app         = express();
 const json        = express.json();
 
-const getPage     = require("./routes/getPage")
+const getPage       = require("./routes/getPage")
+const API           = require("./RestAPI/API")
 
 const readline     	= require("readline");
 const r1         	= readline.createInterface({
@@ -12,12 +13,10 @@ const r1         	= readline.createInterface({
 
 const PORT = process.env.PORT || 3000;
 
-const errorList = {
-	enTrueAut	: "The request was successful",
-	ruTrueAut	: "Запрос прошел успешно",
-	enFalseAut 	: "Invalid email or password",
-	ruFalseAut 	: "Не верные email или пароль"
-} 
+const test = {
+    email   : "vlad@gmail.com",
+    password: 333222 
+}
 
 // const bcrypt = require("bcrypt");
 
@@ -31,41 +30,10 @@ app.options('*', (req, res) => {
     res.send('ok');
 });
 
-app.post("/authorization", json, (req, res) =>{
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.set('Access-Control-Allow-Headers', 'Content-Type')
-  
-    if(req.body.email == test.email &&
-       req.body.password == test.password)
-        
-        if(req.body.lang == "ru") 
-        	res.json({
-            	result  : true,
-            	massage : errorList.ruTrueAut
-        	});
-    	else 
-    		res.json({
-            	result  : true,
-            	massage : errorList.enFalseAut
-        	});
-    else 
-    	if(req.body.lang == "ru")	
-    		res.json({
-            	result  : false,
-            	massage : errorList.ruFalseAut
-        	});
-    	else 
-    		res.json({
-            	result  : false,
-            	massage : errorList.enFalseAut
-        	});
-
-})
-
+app.use(API);
 
 r1.on("line", (input) => {
-    if (input.toLowerCase() == "закрыть" || input.toLowerCase() == "завершить")
+    if (input.toLowerCase() == "закрыть" || input.toLowerCase() == "завершить" || input.toLowerCase() == "выход")
         {
             console.log("___ \nХорошего дня, хозяин! \n___");
             process.exit();
