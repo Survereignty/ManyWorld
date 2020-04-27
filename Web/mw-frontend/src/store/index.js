@@ -9,7 +9,8 @@ export default new Vuex.Store({
     login: false,
     loading: false,
     error: false,
-    errorMassage: ''
+    errorMassage: '',
+    settingsMenu: false
   },
   mutations: {
     changeLoginTrue() {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     changeErrorFalse() {
       this.state.error = false
+    },
+    changeSettingsMenu() {
+      this.state.settingsMenu = !this.state.settingsMenu
     }
   },
   actions: {
@@ -49,15 +53,21 @@ export default new Vuex.Store({
           commit('changeLoadingFalse')
         }
       })
-      .catch(error => {
+      .catch(() => {
         commit('changeErrorTrue')
-        this.state.errorMassage = error
         commit('changeLoadingFalse')
       })
     },
+    Logout({commit}) {
+      commit('changeLoginFalse')
+    },
     CloseError({commit}) {
       commit('changeErrorFalse')
+    },
+    DropMenu({commit}) {
+      commit('changeSettingsMenu')
     }
+
   },
   modules: {
   }

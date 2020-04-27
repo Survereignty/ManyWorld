@@ -58,7 +58,7 @@ export default {
             }
             this.$store.dispatch('Login', date)
             .then(() => {
-                if(this.$store.state.login) this.$router.push('/')
+                if(this.$store.state.login) this.$router.push(`/${this.$i18n.locale}`)
             })
         }
     },
