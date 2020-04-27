@@ -35,8 +35,6 @@ app.post("/authorization", json, (req, res) =>{
 				result  : false,
 				massage : errorList.enFalseAut
 			});
-
-    res.sendStatus(200);
 });
 
 module.exports = app;
