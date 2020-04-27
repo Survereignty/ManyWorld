@@ -2,7 +2,7 @@ const { Router } = require("express");
 const errorList  = require("ErrorList");
 const router = Router(); 
 
-app.post("/authorization", json, (req, res) =>{
+router.post("/authorization", json, (req, res) =>{
     res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type')
