@@ -11,6 +11,10 @@ app.post("/authorization", json, (req, res) =>{
     res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type')
 
+    console.log(errorList);
+    console.log(test);
+
+
     if(req.body.email == test.email &&
 		req.body.password == test.password)
 

@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
 	enTrueAut	: "The request was successful",
 	ruTrueAut	: "Запрос прошел успешно",
 	enFalseAut 	: "Invalid email or password",
