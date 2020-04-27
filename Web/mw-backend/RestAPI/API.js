@@ -2,7 +2,7 @@ const express     = require("express");
 const app         = express();
 const json        = express.json();
 
-const errorList  = require("ErrorList");
+const errorList  = require("./ErrorList");
 
 app.post("/authorization", json, (req, res) =>{
     res.set('Access-Control-Allow-Origin', '*');
