@@ -33,11 +33,12 @@ r1.on("line", (input) => {
         input.toLowerCase() == "выход"      || 
         input.toLowerCase() == "pfrhsnm")
         {
-            console.log("___ \nХорошего дня, хозяин! \n___");
+            console.log("___ \n\nРаб молвит - Хорошего дня, хозяин! \n___");
             process.exit();
         }
+    console.log("\nХозяин- ")
 })
 
 app.listen(PORT, () => {
-    console.log("___ \nПриложение запущено хозяин! \n___");
+    console.log("\n___ \n\nРаб молвит - Дело сделано. Приложение запущено, хозяин! \n___\n");
 });
