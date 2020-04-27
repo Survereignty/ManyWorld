@@ -1,8 +1,10 @@
-const { Router } = require("express");
-const errorList  = require("./ErrorList");
-const router = Router();
+const express     = require("express");
+const app         = express();
+const json        = express.json();
 
-router.post("/authorization", json , (req, res) =>{
+const errorList  = require("ErrorList");
+
+app.post("/authorization", json, (req, res) =>{
     res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type')
@@ -35,4 +37,4 @@ router.post("/authorization", json , (req, res) =>{
     res.send(200);
 });
 
-module.exports = router;
+module.exports = app;
