@@ -3,6 +3,7 @@
     <Loading v-if="loading"></Loading>
     <Error v-if="error"></Error>
     <Settings v-if="login"></Settings>
+    <DropSettings></DropSettings>
     <div v-if="login" id="nav">
       <router-link :to="`/${$i18n.locale}`">Home</router-link> |
       <router-link :to="`/${$i18n.locale}/about`">About</router-link> |
@@ -15,6 +16,7 @@
 
 <script>
 import Settings from '@/components/Settings/Settings.vue'
+import DropSettings from '@/components/Settings/DropSettings.vue'
 import Loading from '@/components/Loading.vue'
 import Error from '@/components/Error.vue'
 
@@ -22,18 +24,22 @@ export default {
   components: {
     Settings,
     Loading,
+    DropSettings,
     Error
   },
   computed: {
     login() {
-      return this.$store.state.login
+        return this.$store.state.login
     },
     loading() {
-      return this.$store.state.loading
+        return this.$store.state.loading
     },
     error() {
-      return this.$store.state.error
-    }
+        return this.$store.state.error
+    },
+    menu() {
+        return this.$store.state.settingsMenu
+    },
   }
 }
 </script>
@@ -63,6 +69,15 @@ export default {
   input::-webkit-search-cancel-button,
   input::-webkit-search-results-button,
   input::-webkit-search-results-decoration { display: none; }
+  textarea:focus, input:focus{
+  outline: none;
+  }
+  button:active, button:focus, select:focus, select:active {
+  outline: none;
+  }
+  button::-moz-focus-inner, select::-moz-focus-inner  {
+    border: 0;
+  }
   ol, ul { list-style: none; }
   @font-face {
     font-family: Ubuntu;
