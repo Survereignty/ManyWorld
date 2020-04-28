@@ -155,4 +155,9 @@ export default {
       }
     }
   }
+
+  .sss:hover #nav{
+    widows: 500px;
+    background: black;
+  }
 </style>
