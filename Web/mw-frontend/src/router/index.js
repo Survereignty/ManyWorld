@@ -4,7 +4,6 @@ import i18n from '../i18n'
 
 import AuthGuard from './auth-guard'
 import Home from '../views/Home.vue'
-import ErrorPage from '../views/Error.vue'
 
 Vue.use(VueRouter)
 
@@ -23,12 +22,7 @@ Vue.use(VueRouter)
         path: '/',
         name: 'Home',
         component: Home,
-        beforeEnter: AuthGuard,
-      },
-      {
-        path: 'about',
-        name: 'About',
-        component: () => import('../views/About.vue'),
+        props: true,
         beforeEnter: AuthGuard,
       },
       {
@@ -37,9 +31,10 @@ Vue.use(VueRouter)
         component: () => import('../views/Login.vue'),
       },
       {
-        path: '*',
-        name: 'Error',
-        component: ErrorPage,
+        path: ':id',
+        name: 'Showcase',
+        props: true,
+        component: () => import('../views/Showcase.vue'),
         beforeEnter: AuthGuard,
       }
     ]
