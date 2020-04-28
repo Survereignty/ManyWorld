@@ -7,6 +7,7 @@
       <router-link :to="`/${$i18n.locale}`">Home</router-link> |
       <router-link :to="`/${$i18n.locale}/about`">About</router-link> |
       <router-link :to="`/${$i18n.locale}/login`">Login</router-link>
+      <button class="sss"></button>
     </div>
     <router-view/>
   </div>
@@ -102,5 +103,10 @@ export default {
         color: #42b983;
       }
     }
+  }
+
+  .sss:hover #nav{
+    widows: 500px;
+    background: black;
   }
 </style>
