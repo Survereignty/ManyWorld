@@ -1,31 +1,48 @@
 <template>
-  <div id="app">
-    <Loading v-if="loading"></Loading>
-    <Error v-if="error"></Error>
-    <Settings v-if="login"></Settings>
-    <DropSettings></DropSettings>
-    <div v-if="login" id="nav">
-      <router-link :to="`/${$i18n.locale}`">Home</router-link> |
-      <router-link :to="`/${$i18n.locale}/about`">About</router-link> |
-      <router-link :to="`/${$i18n.locale}/login`">Login</router-link>
-      <button class="sss"></button>
-    </div>
-    <router-view/>
-  </div>
+  <main>
+
+    <!-- Меню -->
+    <Menu       v-if="login"/>
+    <Settings   v-if="login"/>
+
+    <!-- Навигация -->
+    <Nav        v-if="login"/>
+    <SwitchNav  v-if="login"/>
+
+    <!-- Блок загрузки -->
+    <Loading    v-show="loading"/>
+
+    <!-- Блок ошибки -->
+    <Error      v-show="error"/>
+
+    <BackDrop   v-show="nav & mobile"/>
+
+    <content @click="closeAll">
+      <router-view/>
+    </content>
+  </main>
 </template>
 
 <script>
+import Menu from '@/components/Settings/Menu.vue'
 import Settings from '@/components/Settings/Settings.vue'
-import DropSettings from '@/components/Settings/DropSettings.vue'
+
+import Nav from '@/components/Nav/Nav.vue'
+import SwitchNav from '@/components/Nav/SwitchNav.vue'
+
+import BackDrop from '@/components/BackDrop.vue'
 import Loading from '@/components/Loading.vue'
 import Error from '@/components/Error.vue'
 
 export default {
   components: {
+    Menu,
     Settings,
+    Nav,
+    SwitchNav,
     Loading,
-    DropSettings,
-    Error
+    Error,
+    BackDrop
   },
   computed: {
     login() {
@@ -40,6 +57,17 @@ export default {
     menu() {
         return this.$store.state.settingsMenu
     },
+    nav() {
+        return this.$store.state.nav
+    },
+    mobile() {
+        return this.$store.state.mobile
+    },
+  },
+  methods: {
+    closeAll() {
+      if (this.menu) this.$store.dispatch('DropMenu');
+    }
   }
 }
 </script>
@@ -99,12 +127,20 @@ export default {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
   }
-  #app {
+  ::-webkit-scrollbar { width: 3px; height: 3px;}
+  ::-webkit-scrollbar-button {  background-color: #121212; }
+  ::-webkit-scrollbar-track {  background-color: #121212;}
+  ::-webkit-scrollbar-track-piece { background-color: #121212;}
+  ::-webkit-scrollbar-thumb { height: 50px; background-color: #121212; border-radius: 3px;}
+  ::-webkit-scrollbar-corner { background-color: #121212;}
+  ::-webkit-resizer { background-color: #121212;}
+
+  content {
+    width: 100%;
+    height: 100%;
+    padding-top: 60px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
   }
 
   #nav {

@@ -1,16 +1,28 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import VueResource from 'vue-resource'
+import i18n from '../i18n'
 
 Vue.use(Vuex)
 
+Vue.use(VueResource);
+
+Vue.http.options.root = "http://localhost:3000/"
+
+// Vue.http.interceptors.push(request => {
+//   request.headers.set('Kirill', 'XYI')
+// })
+
 export default new Vuex.Store({
   state: {
+    mobile: /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent),
     login: false,
+    urlLogin: Vue.resource('authorization'),
     loading: false,
     error: false,
     errorMassage: '',
-    settingsMenu: false
+    settingsMenu: false,
+    nav: true,
   },
   mutations: {
     changeLoginTrue() {
@@ -33,12 +45,15 @@ export default new Vuex.Store({
     },
     changeSettingsMenu() {
       this.state.settingsMenu = !this.state.settingsMenu
+    },
+    changeNavMenu() {
+      this.state.nav = !this.state.nav
     }
   },
   actions: {
     async Login ({commit}, {lang, email, password}) {
       commit('changeLoadingTrue')
-      await Vue.http.post('http://localhost:3000/authorization', {
+      await this.state.urlLogin.save({}, {
         lang,
         email,
         password
@@ -48,15 +63,27 @@ export default new Vuex.Store({
           commit('changeLoginTrue')
           commit('changeLoadingFalse')
         } else {
-          commit('changeErrorTrue')
-          this.state.errorMassage = response.body.massage
+          this.dispatch("SetError", response)
           commit('changeLoadingFalse')
         }
       })
-      .catch(() => {
-        commit('changeErrorTrue')
+      .catch(error => {
+        this.dispatch("SetError", error)
         commit('changeLoadingFalse')
       })
+    },
+    // Установка ошибки
+    SetError({commit}, massage) {
+      commit('changeErrorTrue');
+      if(massage.status === 0) {
+        if (i18n.locale === "ru") {
+          this.state.errorMassage = "Сервер не доступен";
+        } else {
+          this.state.errorMassage = "The Server is not available";
+        }
+      } else {
+        this.state.errorMassage = massage.body.massage;
+      }
     },
     Logout({commit}) {
       commit('changeLoginFalse')
@@ -66,8 +93,10 @@ export default new Vuex.Store({
     },
     DropMenu({commit}) {
       commit('changeSettingsMenu')
-    }
-
+    },
+    SwitchNav({commit}) {
+      commit('changeNavMenu')
+    },
   },
   modules: {
   }
