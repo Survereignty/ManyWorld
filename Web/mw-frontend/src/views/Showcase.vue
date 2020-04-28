@@ -1,17 +1,24 @@
 <template>
     <div>
-        <section>
-            <h1>{{tag}}</h1>
+        <NotFound v-if="notFound"/>
+        <section v-else>
         </section>
+        <h1>{{tag}}</h1>
     </div>
 </template>
 
 <script>
+    import NotFound from '@/components/Items/NotFound.vue'
+
     export default {
         name: "Showcase",
+        components: {
+            NotFound
+        },
         data () {
             return {
                 tag: this.$router.currentRoute.params['id'],
+                notFound: true,
                 items: []
             }
         },
@@ -24,7 +31,14 @@
             getItems() {
                 this.resource.get()
                 .then(response => {response.json()})
-                .then(items => this.items = items)
+                .then(items => {
+                    if (items) {
+                        this.notFound = false
+                        this.items = items
+                    } else {
+                        this.notFound = true
+                    }
+                })
                 .catch(error => this.$store.dispatch('SetError', error))
             }
         },

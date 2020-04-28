@@ -45,8 +45,8 @@ export default {
     name: 'Login',
     data () {
         return {
-            email: 'vlad@gmail.com',
-            password: '333222'
+            email: 'dio@gmail.com',
+            password: '123456'
         }
     },
     methods: {
