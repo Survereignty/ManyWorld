@@ -20,7 +20,7 @@ export default new Vuex.Store({
       login: 'Noname',
       role: 0
     },
-    login: true,
+    login: false,
     urlLogin: Vue.resource('authorization'),
     loading: false,
     error: false,
@@ -81,7 +81,7 @@ export default new Vuex.Store({
     // Установка ошибки
     SetError({commit}, massage) {
       commit('changeErrorTrue');
-      if(massage.status === 0) {
+      if(massage.status === 0 || massage.status === 404) {
         if (i18n.locale === "ru") {
           this.state.errorMassage = "Сервер не доступен";
         } else {
