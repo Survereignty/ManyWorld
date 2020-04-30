@@ -1,41 +1,45 @@
 <template>
-    <div class="login-card">
-        <div class="login-title">
-                {{$t('title')}}
-        </div>
-        <form class="login-form" @submit.prevent="login">
-            <div class="login-row">
-                <label for="email">{{$t('email')}}</label>
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    :class="{'is-invalid' : $v.email.$error}"
-                    @input="$v.email.$touch()"
-                    v-model="email"
-                >
+    <content>
+        <section>
+            <div class="login-card">
+                <div class="login-title">
+                        {{$t('login.title')}}
+                </div>
+                <form class="login-form" @submit.prevent="login">
+                    <div class="login-row">
+                        <label for="email">{{$t('login.email')}}</label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            :class="{'is-invalid' : $v.email.$error}"
+                            @input="$v.email.$touch()"
+                            v-model="email"
+                        >
+                    </div>
+                    <div class="login-row">
+                        <label for="password">{{$t('login.password')}}</label>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            :class="{'is-invalid' : $v.password.$error}"
+                            @input="$v.password.$touch()"
+                            v-model="password"
+                        >
+                    </div>
+                    <div class="login-row">
+                        <button
+                            type="submit"
+                            :disabled="$v.$invalid"
+                        >
+                        {{$t('login.next')}}
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="login-row">
-                <label for="password">{{$t('password')}}</label>
-                <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    :class="{'is-invalid' : $v.password.$error}"
-                    @input="$v.password.$touch()"
-                    v-model="password"
-                >
-            </div>
-            <div class="login-row">
-                <button
-                    type="submit"
-                    :disabled="$v.$invalid"
-                >
-                {{$t('next')}}
-                </button>
-            </div>
-        </form>
-    </div>
+        </section>
+    </content>
 </template>
 
 <script>
@@ -43,6 +47,11 @@ import {required, email, minLength} from 'vuelidate/lib/validators'
 
 export default {
     name: 'Login',
+    metaInfo() {
+        return {
+            title: this.$t('login.title')
+        }
+    },
     data () {
         return {
             email: 'dio@gmail.com',
@@ -74,23 +83,6 @@ export default {
     }
 }
 </script>
-
-<i18n>
-{
-    "en": {
-        "title": "Login",
-        "email": "Email",
-        "password": "Password",
-        "next": "Next"
-    },
-    "ru": {
-        "title": "Вход",
-        "email": "Почта",
-        "password": "Пароль",
-        "next": "Далее"
-    }
-}
-</i18n>
 
 <style lang="scss" scoped>
     .login-card {

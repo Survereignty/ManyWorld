@@ -17,9 +17,9 @@
 
     <BackDrop   v-show="nav & mobile"/>
 
-    <content @click="closeAll">
-      <router-view/>
-    </content>
+    <router-view/>
+
+    <Footer v-if="login"/>
   </main>
 </template>
 
@@ -30,6 +30,7 @@ import Settings from '@/components/Settings/Settings.vue'
 import Nav from '@/components/Nav/Nav.vue'
 import SwitchNav from '@/components/Nav/SwitchNav.vue'
 
+import Footer from '@/components/Footer.vue'
 import BackDrop from '@/components/BackDrop.vue'
 import Loading from '@/components/Loading.vue'
 import Error from '@/components/Error.vue'
@@ -42,7 +43,8 @@ export default {
     SwitchNav,
     Loading,
     Error,
-    BackDrop
+    BackDrop,
+    Footer
   },
   computed: {
     login() {
@@ -65,9 +67,7 @@ export default {
     },
   },
   methods: {
-    closeAll() {
-      if (this.menu) this.$store.dispatch('DropMenu');
-    }
+
   }
 }
 </script>
@@ -135,29 +135,11 @@ export default {
   ::-webkit-scrollbar-corner { background-color: #121212;}
   ::-webkit-resizer { background-color: #121212;}
 
-  content {
-    width: 100%;
-    height: 100%;
-    padding-top: 60px;
-    display: flex;
-    justify-content: center;
-  }
-
-  #nav {
-    padding: 30px;
-
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &.router-link-exact-active {
-        color: #42b983;
-      }
+    content {
+        width: 100%;
+        padding-top: 60px;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
     }
-  }
-
-  .sss:hover #nav{
-    widows: 500px;
-    background: black;
-  }
 </style>

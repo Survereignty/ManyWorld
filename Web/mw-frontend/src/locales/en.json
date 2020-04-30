@@ -1,3 +1,29 @@
 {
-  "message": "hello i18n !!"
+  "login": {
+    "title":    "Login",
+    "email":    "Email",
+    "password": "Password",
+    "next":     "Next"
+  },
+  "error": {
+    "title":  "There was a mistake!",
+    "next":   "OK"
+  },
+  "settings": {
+    "exit": "Exit",
+    "lang": "Language"
+  },
+  "nav": {
+    "home":         "Home",
+    "worlds":       "Worlds",
+    "fractions":    "Fractions",
+    "races":        "Races",
+    "characters":   "Characters",
+    "stories":      "Stories",
+    "projects":     "Projects",
+    "gallery":      "Gallery"
+  },
+  "notFound": {
+    "title": "We didn't find anything :("
+  }
 }

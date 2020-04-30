@@ -5,6 +5,7 @@ import router from './router'
 import Vuelidate from 'vuelidate'
 import store from './store'
 import i18n from './i18n'
+import VueMeta from 'vue-meta'
 
 Vue.config.productionTip = false
 
@@ -19,7 +20,7 @@ router.beforeEach((to, from, next) => {
 })
 
 Vue.use(Vuelidate);
-
+Vue.use(VueMeta);
 
 new Vue({
   router,
