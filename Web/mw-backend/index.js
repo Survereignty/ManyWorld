@@ -57,7 +57,8 @@ r1.on("line", (input) => {
     if (input.toLowerCase() == "закрыть"    || 
         input.toLowerCase() == "завершить"  || 
         input.toLowerCase() == "закончить"  ||
-        input.toLowerCase() == "выход"      || 
+        input.toLowerCase() == "выход"      ||
+        input.toLowerCase() == "close"      || 
         input.toLowerCase() == "pfrhsnm")
         {
             console.log("___ \n\nРаб молвит - Хорошего дня, хозяин! \n___");

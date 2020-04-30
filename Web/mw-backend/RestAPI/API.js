@@ -5,7 +5,6 @@ const MongoClient = require("mongodb").MongoClient;
 
 const url = "mongodb://localhost:27017/"; 
 const Mongo = new MongoClient(url, { useNewUrlParser: true });
-const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 
 const errorList = require("./ErrorList");
 const user 		= require("../module/user")
@@ -16,6 +15,8 @@ app.post("/authorization", json, (req, res) =>{
     res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type')
 
+    const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+    
 	mongoClient.connect((err, client)=>{
 	 
 	    const db = client.db("usersdb");
@@ -56,8 +57,8 @@ app.post("/authorization", json, (req, res) =>{
 						res.json({
 							result  : false,
 							massage : errorList.enFalseAut
-						});
-			client.close();
+						});		
+			client.close();	
 		})
     });
 });
@@ -93,9 +94,5 @@ app.post("/user", json, (req, res)=> {
 	    });
 	});
 });
-
-
-
-
 
 module.exports = app;
