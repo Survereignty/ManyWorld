@@ -1,10 +1,9 @@
 <template>
-    <div>
+    <content @click="closeAll">
         <NotFound v-if="notFound"/>
         <section v-else>
         </section>
-        <h1>{{tag}}</h1>
-    </div>
+    </content>
 </template>
 
 <script>
@@ -12,6 +11,11 @@
 
     export default {
         name: "Showcase",
+        metaInfo() {
+            return {
+                title: this.$t(`nav.${this.tag}`)
+            }
+        },
         components: {
             NotFound
         },
@@ -40,6 +44,14 @@
                     }
                 })
                 .catch(error => this.$store.dispatch('SetError', error))
+            },
+            closeAll() {
+                if (this.menu) this.$store.dispatch('DropMenu');
+            }
+        },
+        computed: {
+            menu() {
+                return this.$store.state.settingsMenu
             }
         },
         created() {
@@ -53,6 +65,6 @@
     }
 </script>
 
-<style lang="sccs" scoped>
+<style lang="scss" scoped>
 
 </style>

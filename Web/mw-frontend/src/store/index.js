@@ -3,11 +3,11 @@ import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import i18n from '../i18n'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 Vue.use(VueResource);
 
-Vue.http.options.root = "http://localhost:3000/"
+Vue.http.options.root = "http://localhost:3000/";
 
 // Vue.http.interceptors.push(request => {
 //   request.headers.set('Kirill', 'XYI')
@@ -16,7 +16,11 @@ Vue.http.options.root = "http://localhost:3000/"
 export default new Vuex.Store({
   state: {
     mobile: /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent),
-    login: false,
+    user: {
+      login: 'Noname',
+      role: 0
+    },
+    login: true,
     urlLogin: Vue.resource('authorization'),
     loading: false,
     error: false,
@@ -26,28 +30,28 @@ export default new Vuex.Store({
   },
   mutations: {
     changeLoginTrue() {
-      this.state.login = true
+      this.state.login = true;
     },
     changeLoginFalse() {
-      this.state.login = false
+      this.state.login = false;
     },
     changeLoadingTrue() {
-      this.state.loading = true
+      this.state.loading = true;
     },
     changeLoadingFalse() {
-      this.state.loading = false
+      this.state.loading = false;
     },
     changeErrorTrue() {
-      this.state.error = true
+      this.state.error = true;
     },
     changeErrorFalse() {
-      this.state.error = false
+      this.state.error = false;
     },
     changeSettingsMenu() {
-      this.state.settingsMenu = !this.state.settingsMenu
+      this.state.settingsMenu = !this.state.settingsMenu;
     },
     changeNavMenu() {
-      this.state.nav = !this.state.nav
+      this.state.nav = !this.state.nav;
     }
   },
   actions: {
@@ -60,16 +64,18 @@ export default new Vuex.Store({
       })
       .then(response => {
         if (response.body.result) {
-          commit('changeLoginTrue')
-          commit('changeLoadingFalse')
+          this.state.user.login = "Noname" //response.body.name;
+          this.state.user.role = 1 //response.body.role;
+          commit('changeLoginTrue');
+          commit('changeLoadingFalse');
         } else {
-          this.dispatch("SetError", response)
-          commit('changeLoadingFalse')
+          this.dispatch("SetError", response);
+          commit('changeLoadingFalse');
         }
       })
       .catch(error => {
-        this.dispatch("SetError", error)
-        commit('changeLoadingFalse')
+        this.dispatch("SetError", error);
+        commit('changeLoadingFalse');
       })
     },
     // Установка ошибки
@@ -86,16 +92,18 @@ export default new Vuex.Store({
       }
     },
     Logout({commit}) {
-      commit('changeLoginFalse')
+      this.state.user.login = 'Noname';
+      this.state.user.role = 0;
+      commit('changeLoginFalse');
     },
     CloseError({commit}) {
-      commit('changeErrorFalse')
+      commit('changeErrorFalse');
     },
     DropMenu({commit}) {
-      commit('changeSettingsMenu')
+      commit('changeSettingsMenu');
     },
     SwitchNav({commit}) {
-      commit('changeNavMenu')
+      commit('changeNavMenu');
     },
   },
   modules: {

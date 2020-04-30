@@ -26,6 +26,11 @@ Vue.use(VueRouter)
         beforeEnter: AuthGuard,
       },
       {
+        path: 'gallery',
+        name: 'Gallery',
+        component: () => import('../views/Gallery.vue'),
+      },
+      {
         path: 'login',
         name: 'Login',
         component: () => import('../views/Login.vue'),

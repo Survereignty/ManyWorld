@@ -3,7 +3,7 @@
         <div class="back-drop" @click="close"></div>
         <div class="login-card">
             <div class="login-title">
-                {{$t('title')}}
+                {{$t('error.title')}}
             </div>
             <div class="login-text">
                 {{error}}
@@ -13,7 +13,7 @@
                     type="submit"
                     @click="close"
                 >
-                {{$t('next')}}
+                {{$t('error.next')}}
                 </button>
             </div>
         </div>
@@ -35,19 +35,6 @@ export default {
     }
 }
 </script>
-
-<i18n>
-{
-    "en": {
-        "title": "There was a mistake!",
-        "next": "OK"
-    },
-    "ru": {
-        "title": "Возникла ошибочка!",
-        "next": "Хорошо"
-    }
-}
-</i18n>
 
 <style lang="scss" scoped>
     .back {

@@ -4,13 +4,14 @@
 
         </div>
         <div class="nav">
-            <router-link exact  active-class="active" :to="`/${$i18n.locale}`">     {{$t('home')}}      </router-link>
-            <router-link active-class="active" :to="`/${$i18n.locale}/worlds`">     {{$t('worlds')}}    </router-link>
-            <router-link active-class="active" :to="`/${$i18n.locale}/fractions`">  {{$t('fractions')}} </router-link>
-            <router-link active-class="active" :to="`/${$i18n.locale}/races`">      {{$t('races')}}     </router-link>
-            <router-link active-class="active" :to="`/${$i18n.locale}/characters`"> {{$t('characters')}}</router-link>
-            <router-link active-class="active" :to="`/${$i18n.locale}/stories`">    {{$t('stories')}}   </router-link>
-            <router-link active-class="active" :to="`/${$i18n.locale}/projects`">   {{$t('projects')}}  </router-link>
+            <router-link exact  active-class="active" :to="`/${$i18n.locale}`">     {{$t('nav.home')}}      </router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/worlds`">     {{$t('nav.worlds')}}    </router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/fractions`">  {{$t('nav.fractions')}} </router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/races`">      {{$t('nav.races')}}     </router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/characters`"> {{$t('nav.characters')}}</router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/stories`">    {{$t('nav.stories')}}   </router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/projects`">   {{$t('nav.projects')}}  </router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/gallery`">    {{$t('nav.gallery')}}  </router-link>
         </div>
     </nav>
 </template>
@@ -25,29 +26,6 @@
         }
     }
 </script>
-
-<i18n>
-{
-    "ru": {
-        "home":         "Главная",
-        "worlds":       "Миры",
-        "fractions":    "Фракции",
-        "races":        "Расы",
-        "characters":   "Персонажи",
-        "stories":      "Рассказы",
-        "projects":     "Проекты"
-    },
-    "en": {
-        "home":         "Home",
-        "worlds":       "Worlds",
-        "fractions":    "Fractions",
-        "races":        "Races",
-        "characters":   "Characters",
-        "stories":      "Stories",
-        "projects":     "Projects"
-    }
-}
-</i18n>
 
 <style lang="scss" scoped>
     .open {
