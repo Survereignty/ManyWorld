@@ -16,6 +16,19 @@ const ref_signature = "IR1RRLYYVB";
 const expiration 	= "4h";
 
 
+const VerefyToken = (req, res, next) => {
+	const bearerHeader = req.headers["authorization"];
+
+	if(typeof bearerHeader !== "undefined" && ){
+		JWT.verefy(req.body.token, ac_signature, (err, authData) => {
+			 if(err) res.sendStatus(403);
+			 next();
+		});
+	} else {
+		res.sendStatus(403);
+	}
+}; 
+
 app.post("/authorization", json, (req, res) =>{
     res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -81,7 +94,7 @@ app.post("/authorization", json, (req, res) =>{
     });
 });
 
-app.post("/user", json, (req, res)=> {
+app.post("/user", json, VerefyToken, (req, res)=> {
 	res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type');

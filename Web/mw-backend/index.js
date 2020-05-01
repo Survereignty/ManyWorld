@@ -31,7 +31,6 @@ mongoClient.connect((err, client)=>{
                 if(err){ 
                     return console.log(err);
                 }
-                console.log(result.email);
                 client.close();
             });
         else
