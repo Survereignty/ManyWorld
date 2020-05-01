@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 Vue.use(VueResource);
 
+//Vue.http.options.root = "http://192.168.1.242:3000/";
 Vue.http.options.root = "http://localhost:3000/";
 
 // Vue.http.interceptors.push(request => {
@@ -26,7 +27,7 @@ export default new Vuex.Store({
     error: false,
     errorMassage: '',
     settingsMenu: false,
-    nav: true,
+    nav: false,
   },
   mutations: {
     changeLoginTrue() {
@@ -64,10 +65,11 @@ export default new Vuex.Store({
       })
       .then(response => {
         if (response.body.result) {
-          this.state.user.login = "Noname" //response.body.name;
-          this.state.user.role = 1 //response.body.role;
+          this.state.user.login = "Noname"
+          this.state.user.role = 1
           commit('changeLoginTrue');
           commit('changeLoadingFalse');
+          if(!this.state.mobile) commit('changeNavMenu');
         } else {
           this.dispatch("SetError", response);
           commit('changeLoadingFalse');
