@@ -49,9 +49,11 @@ app.post("/authorization", json, (req, res) =>{
 					console.log(result.token);
 					if(req.body.lang == "ru")
 						res.json({
-							result  : true,
-							massage : errorList.ruTrueAut,
-							token 	: result.token
+							result  	: true,
+							massage 	: errorList.enTrueAut,
+							ac_token 	: result.ac_token,
+							ref_token	: result.ref_token,
+							name 		: result.name
 						});
 					else
 						res.json({
