@@ -44,16 +44,15 @@ app.post("/authorization", json, (req, res) =>{
 				if(	req.body.password == result.password){
 
 					result.ac_token = JWT.sign({name: result.name, email: result.email, role: result.role}, ac_signature, { expiresIn: expiration });
-					console.log(result.token);
 					result.ref_token = JWT.sign({name: result.name, email: result.email, role: result.role}, ref_signature, { expiresIn: "30d" });
-					console.log(result.token);
 					if(req.body.lang == "ru")
 						res.json({
 							result  	: true,
 							massage 	: errorList.enTrueAut,
 							ac_token 	: result.ac_token,
 							ref_token	: result.ref_token,
-							name 		: result.name
+							name 		: result.name,
+							role 		: result.role
 						});
 					else
 						res.json({
@@ -61,8 +60,8 @@ app.post("/authorization", json, (req, res) =>{
 							massage 	: errorList.enTrueAut,
 							ac_token 	: result.ac_token,
 							ref_token	: result.ref_token,
-							name 		: result.name
-
+							name 		: result.name,
+							role 		: result.role
 						});
 				}else{
 					
