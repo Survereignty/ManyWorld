@@ -1,29 +1,34 @@
 {
-  "login": {
-    "title":    "Вход",
-    "email":    "Почта",
-    "password": "Пароль",
-    "next":     "Далее"
-  },
-  "error": {
-    "title":  "Возникла ошибочка!",
-    "next":   "Хорошо"
-  },
-  "settings": {
-    "exit":   "Выход",
-    "lang":   "Язык"
-  },
-  "nav": {
-    "home":         "Главная",
-    "worlds":       "Миры",
-    "fractions":    "Фракции",
-    "races":        "Расы",
-    "characters":   "Персонажи",
-    "stories":      "Рассказы",
-    "projects":     "Проекты",
-    "gallery":      "Галерея"
-  },
-  "notFound": {
-    "title": "По данному запросу мы ничего не нашли :("
-  }
+    "login": {
+        "title":    "Вход",
+        "email":    "Почта",
+        "password": "Пароль",
+        "next":     "Далее"
+    },
+    "error": {
+        "title":  "Возникла ошибочка!",
+        "next":   "Хорошо"
+    },
+    "settings": {
+        "exit":   "Выход",
+        "lang":   "Язык"
+    },
+    "nav": {
+        "home":         "Главная",
+        "worlds":       "Миры",
+        "fractions":    "Фракции",
+        "races":        "Расы",
+        "characters":   "Персонажи",
+        "stories":      "Рассказы",
+        "projects":     "Проекты",
+        "gallery":      "Галерея"
+    },
+    "notFound": {
+        "title": "По данному запросу мы ничего не нашли :("
+    },
+    "section": {
+        "new":          "Новинка",
+        "favorite":     "Избранное",
+        "collection":   "Коллекция"
+    }
 }

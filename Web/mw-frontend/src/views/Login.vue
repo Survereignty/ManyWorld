@@ -159,26 +159,4 @@ export default {
             }
         }
     }
-@media screen and (max-width: 600px) {
-    .login-card {
-        width: 80%;
-        position:fixed;
-        z-index: 2;
-    }
-}
-@media screen and (max-width: 900px) {
-    .login-card {
-        width: 90%;
-        position:fixed;
-        z-index: 2;
-        .login-title {
-            padding: 0px;
-        }
-        .login-form {
-            .login-row {
-                padding: 10px;
-            }
-        }
-    }
-}
 </style>
