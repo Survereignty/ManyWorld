@@ -4,7 +4,7 @@ const json        = express.json();
 
 const getPage       = require("./routes/getPage");
 const API           = require("./RestAPI/API");
-const User          = require("./module/user"); 
+const User          = require("./module/user");
 
 const readline     	= require("readline");
 const r1         	= readline.createInterface({
@@ -13,9 +13,6 @@ const r1         	= readline.createInterface({
 });
 
 const PORT = process.env.PORT || 3000;
-
-// const bcrypt = require("bcrypt");
-
 
 const url   = "mongodb://localhost:27017/"; 
 const MongoClient = require("mongodb").MongoClient;
@@ -26,6 +23,7 @@ mongoClient.connect((err, client)=>{
  
     const db = client.db("usersdb");
     const collection = db.collection("users");
+
     collection.findOne({ email: 'dio@gmail.com' }, (err, result) =>{
         if (result === null)
             collection.insertOne(new User("Владик", "dio@gmail.com", 123456, 1), (err, result)=>{
