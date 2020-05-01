@@ -19,7 +19,7 @@ const expiration 	= "4h";
 const VerefyToken = (req, res, next) => {
 	const bearerHeader = req.headers["authorization"];
 
-	if(typeof bearerHeader !== "undefined" && ){
+	if(typeof bearerHeader !== "undefined"){
 		JWT.verefy(req.body.token, ac_signature, (err, authData) => {
 			 if(err) res.sendStatus(403);
 			 next();
