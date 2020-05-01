@@ -11,7 +11,8 @@ const user 			= require("../module/user");
 
 
 const JWT 			= require("jsonwebtoken");
-const signature 	= "R1RLYYVB";
+const ac_signature 	= "R1RLYYVB";
+const ref_signature = "IR1RRLYYVB";
 const expiration 	= "4h";
 
 
@@ -42,7 +43,9 @@ app.post("/authorization", json, (req, res) =>{
 	        else
 				if(	req.body.password == result.password){
 
-					result.token = JWT.sign({name: result.name, email: result.email, role: result.role}, signature, { expiresIn: expiration });
+					result.ac_token = JWT.sign({name: result.name, email: result.email, role: result.role}, ac_signature, { expiresIn: expiration });
+					console.log(result.token);
+					result.ref_token = JWT.sign({name: result.name, email: result.email, role: result.role}, ref_signature, { expiresIn: "30d" });
 					console.log(result.token);
 					if(req.body.lang == "ru")
 						res.json({
@@ -52,9 +55,12 @@ app.post("/authorization", json, (req, res) =>{
 						});
 					else
 						res.json({
-							result  : true,
-							massage : errorList.enTrueAut,
-							token 	: result.token
+							result  	: true,
+							massage 	: errorList.enTrueAut,
+							ac_token 	: result.ac_token,
+							ref_token	: result.ref_token,
+							name 		: result.name
+
 						});
 				}else{
 					
