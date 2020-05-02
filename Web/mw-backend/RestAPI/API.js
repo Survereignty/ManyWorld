@@ -87,7 +87,7 @@ app.route("/user")
 			    const db = client.db("usersdb");
 			    const collection = db.collection("users");
 			    collection.findOne({ login: req.body.login }, (err, result) =>{
-			        if (result === null){
+			        if (!result){
 			            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role), (err, result)=>{
 			              
 			                if(err) { 
