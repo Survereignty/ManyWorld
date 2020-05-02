@@ -10,7 +10,7 @@ module.exports = class Token {
 		const bearerHeader = req.headers["authorization"];
 		if(typeof bearerHeader !== "undefined"){
 			const bearer = bearerHeader.split(" ");
-			JWT.verefy(bearer[1], this.ac_signature, (err, authData) => {
+			JWT.verify(bearer[1], this.ac_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
 				 console.log(authData);
 				 next();
@@ -26,7 +26,7 @@ module.exports = class Token {
 		if(typeof bearerHeader !== "undefined"){
 			const bearer = bearerHeader.split(" ");
 
-			JWT.verefy(bearer[1], this.ref_signature, (err, authData) => {
+			JWT.verify(bearer[1], this.ref_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
 				 console.log(authData);
 				 next();
