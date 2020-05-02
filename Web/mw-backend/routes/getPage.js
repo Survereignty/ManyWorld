@@ -4,8 +4,8 @@ const router = Router();
 const MongoClient 	= require("mongodb").MongoClient;
 const url 			= "mongodb://localhost:27017/";
 
-const JWTCreator 	= "../JWT/jwt";
-const JWT 			= new JWTCreator("R1RLYYVB", "IR1RRLYYVB")
+const JWTCreator 	= require("../JWT/jwt");
+const JWT 			= new JWTCreator("R1RLYYVB", "IR1RRLYYVB");
 
 router.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/index.html");
