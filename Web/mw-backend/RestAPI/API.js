@@ -8,7 +8,7 @@ const MongoClient 	= require("mongodb").MongoClient;
 const url 			= "mongodb://localhost:27017/";
 
 const errorList = require("./ErrorList");
-const user 		= require("../module/user");
+const User 		= require("../module/user");
 
 const JWTCreator 	= require("../JWT/jwt");
 const JWT 			= new JWTCreator("R1RLYYVB", "IR1RRLYYVB");
