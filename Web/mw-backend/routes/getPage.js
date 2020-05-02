@@ -18,9 +18,10 @@ router.get("/user", JWT.VerefyToken.bind(JWT), (req, res) => {
     mongoClient.connect((err, client)=>{
 	    const db = client.db("usersdb");
 	    const collection = db.collection("users");
-	    collection.find().toArray((err, kittens) => {
-	        console.log(result);
-	        res.sendStatus(200);
+	    collection.find().toArray((err, result) => {
+	        res.json({
+	        	users: result
+	        })
 	    });
 	});
 });
