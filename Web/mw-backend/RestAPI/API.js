@@ -8,7 +8,7 @@ const MongoClient 	= require("mongodb").MongoClient;
 const url 			= "mongodb://localhost:27017/";
 
 const errorList = require("./ErrorList");
-const User 		= require("../module/user");
+const user 		= require("../module/user");
 
 const JWTCreator 	= require("../JWT/jwt");
 const JWT 			= new JWTCreator("R1RLYYVB", "IR1RRLYYVB");
@@ -67,7 +67,7 @@ app.post("/authorization", json, (req, res) =>{
     });
 });
 
-app.post("/user", corse(), json, JWT.VerefyToken, (req, res)=> {
+app.post("/user", corse(), json, JWT.VerefyToken.bind(JWT), (req, res)=> {
 
     const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 	mongoClient.connect((err, client)=>{
@@ -76,20 +76,20 @@ app.post("/user", corse(), json, JWT.VerefyToken, (req, res)=> {
 	    collection.findOne({ login: req.body.login }, (err, result) =>{
 	        if (result === null){
 	            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role), (err, result)=>{
-	                
+	              
 	                if(err) { 
 	                	console.log("Ошибка - " + err);
 	                	
-	                	if(req.body.lang == 'ru') 	res.json({result  : false, massage : errorList.ruFAddUser});
+	                	if(req.body.lang == ru) 	res.json({result  : false, massage : errorList.ruFAddUser});
 	                	else 						res.json({result  : false, massage : errorList.enFAddUser});
 					}	
 	                client.close();
-	                if(req.body.lang == 'ru')			res.json({result  : true, massage : errorList.ruTAddUser});
+	                if(req.body.lang == ru)			res.json({result  : true, massage : errorList.ruTAddUser});
 	                else 							res.json({result  : true, massage : errorList.enTAddUser});
 	            });
             }
 	        else {
-	        	if(req.body.lang == 'ru') 			res.json({result  : true, massage : errorList.ruRAddUser});
+	        	if(req.body.lang == ru) 			res.json({result  : true, massage : errorList.ruRAddUser});
                 else 								res.json({result  : true, massage : errorList.enRAddUser});
 	        }
 	        client.close();
@@ -98,7 +98,7 @@ app.post("/user", corse(), json, JWT.VerefyToken, (req, res)=> {
 });
 
 
-app.post("/refresh", json, JWT.VerefyRefToken, (req, res) => {
+app.post("/refresh", json, JWT.VerefyRefToken.bind(JWT), (req, res) => {
 
 	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 

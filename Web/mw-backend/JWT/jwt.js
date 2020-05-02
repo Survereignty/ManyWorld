@@ -1,21 +1,15 @@
 const JWT = require("jsonwebtoken");
 
 module.exports = class Token {
-
 	constructor(ac_signature, ref_signature){
 		this.ac_signature 	= ac_signature;
         this.ref_signature 	= ref_signature;
-        console.log(this);
     }
 
 	VerefyToken(req, res, next) {
 		const bearerHeader = req.headers["authorization"];
 		if(typeof bearerHeader !== "undefined"){
 			const bearer = bearerHeader.split(" ");
-
-			// console.log(this);
-			// console.log(this.ac_signature);
-			// console.log(this.ref_signature);
 			JWT.verefy(bearer[1], this.ac_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
 				 console.log(authData);
