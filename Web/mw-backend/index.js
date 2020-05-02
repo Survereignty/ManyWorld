@@ -47,9 +47,9 @@ app.use(express.static("public"));
 app.use(getPage);
 
 app.options('*', (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  res.set("Access-Control-Allow-Headers", "Content-Type");
-  res.send('ok');
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "DELETE, PUT, UPDATE, HEAD, OPTIONS, GET, POST");
 });
 
 app.use(cors());
