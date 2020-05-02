@@ -88,7 +88,7 @@ app.route("/user")
 			    const collection = db.collection("users");
 			    collection.findOne({ login: req.body.login }, (err, result) =>{
 			        if (!result){
-			            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role), (err, result)=>{
+			            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role, req.body.Creator), (err, result)=>{
 			              
 			                if(err) { 
 			                	console.log("Ошибка - " + err);
