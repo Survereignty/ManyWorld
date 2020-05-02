@@ -108,7 +108,7 @@ app.route("/user")
 		    });
 		});
 	})
-	.put(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
+	.delete(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
 		mongoClient.connect((err, client)=>{
 			const db = client.db("usersdb");
 		    const collection = db.collection("users");
