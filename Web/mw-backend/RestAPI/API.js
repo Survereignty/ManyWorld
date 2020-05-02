@@ -92,16 +92,16 @@ app.route("/user")
 		                if(err) { 
 		                	console.log("Ошибка - " + err);
 		                	
-		                	if(req.body.lang == ru) 	res.json({result  : false, massage : errorList.ruFAddUser});
+		                	if(req.body.lang == "ru") 	res.json({result  : false, massage : errorList.ruFAddUser});
 		                	else 						res.json({result  : false, massage : errorList.enFAddUser});
 						}	
 		                client.close();
-		                if(req.body.lang == ru)			res.json({result  : true, massage : errorList.ruTAddUser});
+		                if(req.body.lang == "ru")			res.json({result  : true, massage : errorList.ruTAddUser});
 		                else 							res.json({result  : true, massage : errorList.enTAddUser});
 		            });
 	            }
 		        else {
-		        	if(req.body.lang == ru) 			res.json({result  : true, massage : errorList.ruRAddUser});
+		        	if(req.body.lang == "ru") 			res.json({result  : true, massage : errorList.ruRAddUser});
 	                else 								res.json({result  : true, massage : errorList.enRAddUser});
 		        }
 		        client.close();
