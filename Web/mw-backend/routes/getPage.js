@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/user", JWT.VerefyToken.bind(JWT), (req, res) => {
-
+	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 
     mongoClient.connect((err, client)=>{
 	    const db = client.db("usersdb");
