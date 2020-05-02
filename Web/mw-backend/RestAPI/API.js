@@ -2,6 +2,8 @@ const express	= require("express");
 const app		= express();
 const json 		= express.json();
 
+const corse 	= require("cors");
+
 const MongoClient 	= require("mongodb").MongoClient;
 const url 			= "mongodb://localhost:27017/";
 
@@ -65,7 +67,7 @@ app.post("/authorization", json, (req, res) =>{
     });
 });
 
-app.post("/user", json, JWT.VerefyToken, (req, res)=> {
+app.post("/user", corse(), json, JWT.VerefyToken, (req, res)=> {
 
     const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 	mongoClient.connect((err, client)=>{
