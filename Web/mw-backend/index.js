@@ -46,6 +46,12 @@ app.use(express.static("public"));
 
 app.use(getPage);
 
+app.options('*', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.send('ok');
+});
+
 app.use(cors());
 
 app.use(API);
