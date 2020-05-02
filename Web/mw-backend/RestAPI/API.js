@@ -110,9 +110,9 @@ app.route("/user")
 			});
 		} else {
 			if(req.body.lang == "ru")
-				res.json({result: false, massage : ruLowUser.ruRAddUser});
+				res.json({result: false, massage : errorList.ruRAddUser});
 			else 
-				res.json({result: false, massage : ruLowUser.enRAddUser});
+				res.json({result: false, massage : errorList.enRAddUser});
 		}
 	})
 	.delete(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
