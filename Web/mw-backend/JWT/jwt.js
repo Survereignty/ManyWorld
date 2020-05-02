@@ -12,7 +12,7 @@ module.exports = class Token {
 			const bearer = bearerHeader.split(" ");
 			JWT.verify(bearer[1], this.ac_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
-				 res.authData = authData;
+				 req.authData = authData;
 				 console.log(authData);
 				 next();
 			});
@@ -30,7 +30,7 @@ module.exports = class Token {
 			JWT.verify(bearer[1], this.ref_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
 				 console.log(authData);
-				 res.authData = authData;
+				 req.authData = authData;
 				 next();
 			});
 		} else {
