@@ -109,7 +109,7 @@ app.route("/user")
 			    });
 			});
 		} else {
-			if(res.body.lang == "ru")
+			if(req.body.lang == "ru")
 				res.json({result: false, massage : ruLowUser.ruRAddUser});
 			else 
 				res.json({result: false, massage : ruLowUser.enRAddUser});
@@ -124,7 +124,7 @@ app.route("/user")
 			    collection.deleteOne(req.body.obj, (err, result) => client.close());
 			})
 		} else {
-			if(res.body.lang == "ru")
+			if(req.body.lang == "ru")
 				res.json({result: false, massage : ruLowUser.ruRAddUser});
 			else 
 				res.json({result: false, massage : ruLowUser.enRAddUser});
