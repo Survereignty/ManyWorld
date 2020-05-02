@@ -81,7 +81,7 @@ app.route("/user")
 		});
 	})
 	.post(json, JWT.VerefyToken.bind(JWT), (req, res)=> {
-		if(req.body.role == 1){
+		if(req.authData.role == 1){
 	    	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 			mongoClient.connect((err, client)=>{
 			    const db = client.db("usersdb");
@@ -110,13 +110,13 @@ app.route("/user")
 			});
 		} else {
 			if(req.body.lang == "ru")
-				res.json({result: false, massage : errorList.ruRAddUser});
+				res.json({result: false, massage : errorList.ruLowUser});
 			else 
-				res.json({result: false, massage : errorList.enRAddUser});
+				res.json({result: false, massage : errorList.enLowUser});
 		}
 	})
 	.delete(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
-		if(req.body.role == 1){
+		if(req.authData.role == 1){
 			const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 			mongoClient.connect((err, client)=>{
 				const db = client.db("usersdb");
@@ -125,9 +125,9 @@ app.route("/user")
 			})
 		} else {
 			if(req.body.lang == "ru")
-				res.json({result: false, massage : ruLowUser.ruRAddUser});
+				res.json({result: false, massage : errorList.ruRAddUser});
 			else 
-				res.json({result: false, massage : ruLowUser.enRAddUser});
+				res.json({result: false, massage : errorList.enLowUser});
 		}
 	})
 
