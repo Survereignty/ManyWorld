@@ -81,57 +81,61 @@ app.route("/user")
 		});
 	})
 	.post(json, JWT.VerefyToken.bind(JWT), (req, res)=> {
-    	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
-		mongoClient.connect((err, client)=>{
-		    const db = client.db("usersdb");
-		    const collection = db.collection("users");
-		    collection.findOne({ login: req.body.login }, (err, result) =>{
-		        if (result === null){
-		            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role), (err, result)=>{
-		              
-		                if(err) { 
-		                	console.log("Ошибка - " + err);
-		                	
-		                	if(req.body.lang == "ru") 	res.json({result  : false, massage : errorList.ruFAddUser});
-		                	else 						res.json({result  : false, massage : errorList.enFAddUser});
-						}	
-		                client.close();
-		                if(req.body.lang == "ru")			res.json({result  : true, massage : errorList.ruTAddUser});
-		                else 							res.json({result  : true, massage : errorList.enTAddUser});
-		            });
-	            }
-		        else {
-		        	if(req.body.lang == "ru") 			res.json({result  : true, massage : errorList.ruRAddUser});
-	                else 								res.json({result  : true, massage : errorList.enRAddUser});
-		        }
-		        client.close();
-		    });
-		});
+		if(req.body.role == 1){
+	    	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+			mongoClient.connect((err, client)=>{
+			    const db = client.db("usersdb");
+			    const collection = db.collection("users");
+			    collection.findOne({ login: req.body.login }, (err, result) =>{
+			        if (result === null){
+			            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role), (err, result)=>{
+			              
+			                if(err) { 
+			                	console.log("Ошибка - " + err);
+			                	
+			                	if(req.body.lang == "ru") 	res.json({result  : false, massage : errorList.ruFAddUser});
+			                	else 						res.json({result  : false, massage : errorList.enFAddUser});
+							}	
+			                client.close();
+			                if(req.body.lang == "ru")		res.json({result  : true, massage : errorList.ruTAddUser});
+			                else 							res.json({result  : true, massage : errorList.enTAddUser});
+			            });
+		            }
+			        else {
+			        	if(req.body.lang == "ru") 			res.json({result  : true, massage : errorList.ruRAddUser});
+		                else 								res.json({result  : true, massage : errorList.enRAddUser});
+			        }
+			        client.close();
+			    });
+			});
+		} else {
+			if(res.body.lang == "ru")
+				res.json({result: false, massage : ruLowUser.ruRAddUser});
+			else 
+				res.json({result: false, massage : ruLowUser.enRAddUser});
+		}
 	})
 	.delete(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
-		mongoClient.connect((err, client)=>{
-			const db = client.db("usersdb");
-		    const collection = db.collection("users");
-		    collection.deleteOne(req.body.obj, (err, result) => client.close());
-		})
+		if(req.body.role == 1){
+			const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+			mongoClient.connect((err, client)=>{
+				const db = client.db("usersdb");
+			    const collection = db.collection("users");
+			    collection.deleteOne(req.body.obj, (err, result) => client.close());
+			})
+		} else {
+			if(res.body.lang == "ru")
+				res.json({result: false, massage : ruLowUser.ruRAddUser});
+			else 
+				res.json({result: false, massage : ruLowUser.enRAddUser});
+		}
 	})
 
-app.post("/refresh", json, JWT.VerefyRefToken.bind(JWT), (req, res) => {
-
-	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
-
-	mongoClient.connect((err, client)=>{
-	 
-	    const db = client.db("usersdb");
-	    const collection = db.collection("users");
-	    collection.findOne({ login: req.body.login }, (err, result) =>{
-			res.json({
-				ac_token 	: JWT.Create({login: result.login, email: result.email, role: result.role}, { expiresIn: "1m" }),
-				ref_token	: JWT.CreateRefresh({login: result.login, email: result.email, role: result.role}, { expiresIn: "30d" })
-			})
-			client.close();	
-		})
-    });
+app.get("/refresh", JWT.VerefyRefToken.bind(JWT), (req, res) => {
+	res.json({
+		ac_token 	: JWT.Create({login: req.authData.login, email: req.authData.email, role: req.authData.role}, { expiresIn: "1m" }),
+		ref_token	: JWT.CreateRefresh({login: req.authData.login, email: req.authData.email, role: req.authData.role}, { expiresIn: "30d" })
+	});
 })
 
 
