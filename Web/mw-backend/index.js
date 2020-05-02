@@ -4,7 +4,7 @@ const json        = express.json();
 
 const cors = require("cors");
 
-const getPage       = require("./routes/getPage");
+const getPage       = require("./routes/Page");
 const API           = require("./RestAPI/API");
 const User          = require("./module/user");
 
@@ -26,9 +26,9 @@ mongoClient.connect((err, client)=>{
     const db = client.db("usersdb");
     const collection = db.collection("users");
 
-    collection.findOne({ login: 'Владик' }, (err, result) =>{
+    collection.findOne({ login: "Fucking Vladick Slave",}, (err, result) =>{
         if (result === null)
-            collection.insertOne(new User("Владик", "dio@gmail.com", 123456, 1), (err, result)=>{
+            collection.insertOne(new User("Fucking Vladick Slave", "dioo@gmail.com", 123456, 1, "Lirik-Keltran"), (err, result)=>{
                   
                 if(err){ 
                     return console.log(err);
