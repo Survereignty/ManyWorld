@@ -6,4 +6,9 @@ router.get("/", (req, res) => {
     res.sendStatus(200);
 });
 
+router.get("/user", (req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+    res.sendStatus(200);
+});
+
 module.exports = router;

@@ -36,8 +36,8 @@ app.post("/authorization", json, (req, res) =>{
 	        else
 				if(	req.body.password == result.password){
 
-					result.ac_token = JWT.Create({login: result.login, role: result.role}, { expiresIn: "1m" });
-					result.ref_token = JWT.CreateRefresh({login: result.login, role: result.role}, { expiresIn: "30d" });
+					result.ac_token = JWT.Create({login: result.login, email: result.email, role: result.role}, { expiresIn: "1m" });
+					result.ref_token = JWT.CreateRefresh({login: result.login, email: result.email, role: result.role}, { expiresIn: "30d" });
 					if(req.body.lang == "ru")
 						res.json({
 							result  	: true,
@@ -73,7 +73,7 @@ app.post("/user", json, JWT.VerefyToken, (req, res)=> {
 	    const collection = db.collection("users");
 	    collection.findOne({ login: req.body.login }, (err, result) =>{
 	        if (result === null){
-	            collection.insertOne(new User(req.body.login, req.body.email, req.body.password, req.body.role), (err, result)=>{
+	            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role), (err, result)=>{
 	                
 	                if(err) { 
 	                	console.log("Ошибка - " + err);
@@ -106,8 +106,8 @@ app.post("/refresh", json, JWT.VerefyRefToken, (req, res) => {
 	    const collection = db.collection("users");
 	    collection.findOne({ login: req.body.login }, (err, result) =>{
 			res.json({
-				ac_token 	: JWT.Create({login: result.login, role: result.role}, { expiresIn: "1m" }),
-				ref_token	: JWT.CreateRefresh({login: result.login, role: result.role}, { expiresIn: "30d" })
+				ac_token 	: JWT.Create({login: result.login, email: result.email, role: result.role}, { expiresIn: "1m" }),
+				ref_token	: JWT.CreateRefresh({login: result.login, email: result.email, role: result.role}, { expiresIn: "30d" })
 			})
 			client.close();	
 		})
