@@ -8,7 +8,7 @@ const MongoClient 	= require("mongodb").MongoClient;
 const url 			= "mongodb://localhost:27017/";
 
 const errorList = require("./ErrorList");
-const user 		= require("../module/user");
+const User 		= require("../module/user");
 
 const JWTCreator 	= require("../JWT/jwt");
 const JWT 			= new JWTCreator("R1RLYYVB", "IR1RRLYYVB");
@@ -80,16 +80,16 @@ app.post("/user", corse(), json, JWT.VerefyToken, (req, res)=> {
 	                if(err) { 
 	                	console.log("Ошибка - " + err);
 	                	
-	                	if(req.body.lang == ru) 	res.json({result  : false, massage : errorList.ruFAddUser});
+	                	if(req.body.lang == 'ru') 	res.json({result  : false, massage : errorList.ruFAddUser});
 	                	else 						res.json({result  : false, massage : errorList.enFAddUser});
 					}	
 	                client.close();
-	                if(req.body.lang == ru)			res.json({result  : true, massage : errorList.ruTAddUser});
+	                if(req.body.lang == 'ru')			res.json({result  : true, massage : errorList.ruTAddUser});
 	                else 							res.json({result  : true, massage : errorList.enTAddUser});
 	            });
             }
 	        else {
-	        	if(req.body.lang == ru) 			res.json({result  : true, massage : errorList.ruRAddUser});
+	        	if(req.body.lang == 'ru') 			res.json({result  : true, massage : errorList.ruRAddUser});
                 else 								res.json({result  : true, massage : errorList.enRAddUser});
 	        }
 	        client.close();

@@ -131,27 +131,27 @@
                         tag: "Персонаж"
                     },
                     {
-                        id: 1, name: "Ари", img: img,
+                        id: 6, name: "Ари", img: img,
                         portrait: {size: 400, x:90, y: 0},
                         tag: "Персонаж"
                     },
                     {
-                        id: 2, name: "Ари", img: img1,
+                        id: 7, name: "Ари", img: img1,
                         portrait: {size: 400, x:30, y: 10},
                         tag: "Персонаж"
                     },
                     {
-                        id: 3, name: "Ари", img: img2,
+                        id: 8, name: "Ари", img: img2,
                         portrait: {size: 400, x:75, y: 0},
                         tag: "Персонаж"
                     },
                     {
-                        id: 4, name: "Ари", img: img4,
+                        id: 9, name: "Ари", img: img4,
                         portrait: {size: 400, x:30, y: 0},
                         tag: "Персонаж"
                     },
                     {
-                        id: 5, name: "Пошленькая Ари", img: img3,
+                        id: 10, name: "Пошленькая Ари", img: img3,
                         portrait: {size: 200, x:60, y: 0},
                         tag: "Персонаж"
                     }
@@ -181,12 +181,7 @@
                 .catch(error => this.$store.dispatch('SetError', error))
             },
             closeAll() {
-                if (this.menu) this.$store.dispatch('DropMenu');
-            }
-        },
-        computed: {
-            menu() {
-                return this.$store.state.settingsMenu
+                this.$store.commit('CHANGE_MENU', false);
             }
         },
         created() {

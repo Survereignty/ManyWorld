@@ -7,7 +7,8 @@
         name: "BackDrop",
         methods: {
             closeAll() {
-                this.$store.dispatch('SwitchNav');
+                this.$store.commit('CHANGE_MENU', false);
+                this.$store.commit('CHANGE_NAV', false);
             }
         },
     }

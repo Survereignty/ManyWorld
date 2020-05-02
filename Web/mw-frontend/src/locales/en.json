@@ -1,9 +1,10 @@
 {
     "login": {
-        "title":    "Login",
-        "email":    "Email",
+        "title":    "Authorization",
+        "login":    "Login",
         "password": "Password",
-        "next":     "Next"
+        "next":     "Next",
+        "role":     "Role"
     },
     "error": {
         "title":  "There was a mistake!",
@@ -14,14 +15,17 @@
         "lang": "Language"
     },
     "nav": {
-        "home":         "Home",
-        "worlds":       "Worlds",
-        "fractions":    "Fractions",
-        "races":        "Races",
+        "create"    :   "Create",
+        "home"      :   "Home",
+        "worlds"    :   "Worlds",
+        "fractions" :   "Fractions",
+        "races"     :   "Races",
         "characters":   "Characters",
-        "stories":      "Stories",
-        "projects":     "Projects",
-        "gallery":      "Gallery"
+        "stories"   :   "Stories",
+        "projects"  :   "Projects",
+        "gallery"   :   "Gallery",
+        "settings":     "Settings",
+        "users":        "Users"
     },
     "notFound": {
         "title": "We didn't find anything :("
@@ -30,5 +34,11 @@
         "new":          "New",
         "favorite":     "Favorite",
         "collection":   "Collection"
+    },
+    "errors": {
+        "400": "Bad request",
+        "401": "Invalid email or password",
+        "500": "Internal server error",
+        "503": "Server is not available"
     }
 }

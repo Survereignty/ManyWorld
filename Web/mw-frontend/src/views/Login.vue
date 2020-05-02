@@ -5,16 +5,16 @@
                 <div class="login-title">
                         {{$t('login.title')}}
                 </div>
-                <form class="login-form" @submit.prevent="login">
+                <form class="login-form" @submit.prevent="auth">
                     <div class="login-row">
-                        <label for="email">{{$t('login.email')}}</label>
+                        <label for="login">{{$t('login.login')}}</label>
                         <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            :class="{'is-invalid' : $v.email.$error}"
-                            @input="$v.email.$touch()"
-                            v-model="email"
+                            id="login"
+                            type="login"
+                            name="login"
+                            :class="{'is-invalid' : $v.login.$error}"
+                            @input="$v.login.$touch()"
+                            v-model="login"
                         >
                     </div>
                     <div class="login-row">
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {required, email, minLength} from 'vuelidate/lib/validators'
+import {required, minLength} from 'vuelidate/lib/validators'
 
 export default {
     name: 'Login',
@@ -54,27 +54,24 @@ export default {
     },
     data () {
         return {
-            email: 'dio@gmail.com',
+            login: 'Владик',
             password: '123456'
         }
     },
     methods: {
-        login() {
-            const date = {
-                lang: this.$i18n.locale,
-                email: this.email,
+        auth() {
+            this.$store.dispatch('LOGIN', {
+                login: this.login,
                 password: this.password
-            }
-            this.$store.dispatch('Login', date)
+            })
             .then(() => {
-                if(this.$store.state.login) this.$router.push(`/${this.$i18n.locale}`)
+                if (this.$store.state.user.LOGIN) this.$router.push(`/${this.$i18n.locale}`)
             })
         }
     },
     validations: {
-        email: {
+        login: {
             required,
-            email
         },
         password: {
             required,

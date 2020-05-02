@@ -2,20 +2,20 @@
   <main>
 
     <!-- Меню -->
-    <Menu       v-if="login"/>
-    <Settings   v-if="login"/>
+    <Menu       v-if="LOGIN"/>
+    <Settings   v-if="LOGIN"/>
 
     <!-- Навигация -->
-    <Nav        v-if="login"/>
-    <SwitchNav  v-if="login"/>
+    <Nav        v-if="LOGIN"/>
+    <SwitchNav  v-if="LOGIN"/>
 
     <!-- Блок загрузки -->
-    <Loading    v-show="loading"/>
+    <Loading    v-show="LOADING"/>
 
     <!-- Блок ошибки -->
-    <Error      v-show="error"/>
+    <Error      v-show="ERROR"/>
 
-    <BackDrop   v-show="nav & mobile"/>
+    <BackDrop   v-show="NAV & APP_MOBILE"/>
 
     <router-view/>
   </main>
@@ -42,29 +42,24 @@ export default {
         Error,
         BackDrop
     },
-    data() {
-        return {
-        footer: false
-        }
-    },
     computed: {
-        login() {
-            return this.$store.state.login
+        LOGIN() {
+            return this.$store.state.user.LOGIN
         },
-        loading() {
-            return this.$store.state.loading
+        LOADING() {
+            return this.$store.state.app.LOADING
         },
-        error() {
-            return this.$store.state.error
+        ERROR() {
+            return this.$store.state.app.ERROR
         },
-        menu() {
-            return this.$store.state.settingsMenu
+        MENU() {
+            return this.$store.state.app.MENU
         },
-        nav() {
-            return this.$store.state.nav
+        NAV() {
+            return this.$store.state.app.NAV
         },
-        mobile() {
-            return this.$store.state.mobile
+        APP_MOBILE() {
+            return this.$store.state.app.APP_MOBILE
         },
     }
 }

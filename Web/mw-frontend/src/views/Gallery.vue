@@ -1,5 +1,5 @@
 <template>
-    <content>
+    <content click="closeAll">
         <section>
             <h1>Gallery</h1>
         </section>
@@ -12,6 +12,11 @@
         metaInfo() {
             return {
                 title: this.$t('nav.gallery')
+            }
+        },
+        methods: {
+            closeAll() {
+                this.$store.commit('CHANGE_MENU', false);
             }
         }
     }

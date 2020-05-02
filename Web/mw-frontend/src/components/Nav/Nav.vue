@@ -3,6 +3,9 @@
         <div class="title">
 
         </div>
+        <div class="nav" v-if="role">
+            <router-link active-class="active" :to="`/${$i18n.locale}/create`">     {{$t('nav.create')}}    </router-link>
+        </div>
         <div class="nav">
             <router-link exact  active-class="active" :to="`/${$i18n.locale}`">     {{$t('nav.home')}}      </router-link>
             <router-link active-class="active" :to="`/${$i18n.locale}/worlds`">     {{$t('nav.worlds')}}    </router-link>
@@ -12,6 +15,7 @@
             <router-link active-class="active" :to="`/${$i18n.locale}/stories`">    {{$t('nav.stories')}}   </router-link>
             <router-link active-class="active" :to="`/${$i18n.locale}/projects`">   {{$t('nav.projects')}}  </router-link>
             <router-link active-class="active" :to="`/${$i18n.locale}/gallery`">    {{$t('nav.gallery')}}  </router-link>
+            <router-link active-class="active" :to="`/${$i18n.locale}/login`">    login  </router-link>
         </div>
     </nav>
 </template>
@@ -21,8 +25,11 @@
         name: "Nav",
         computed: {
             nav() {
-                return this.$store.state.nav
+                return this.$store.state.app.NAV
             },
+            role() {
+                return this.$store.state.user.ROLE === 1
+            }
         }
     }
 </script>

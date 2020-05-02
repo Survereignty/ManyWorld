@@ -6,7 +6,7 @@
                 {{$t('error.title')}}
             </div>
             <div class="login-text">
-                {{error}}
+                {{ERROR_MASSAGE}}
             </div>
             <div class="login-row">
                 <button
@@ -25,12 +25,18 @@ export default {
     name: 'Error',
     methods: {
         close() {
-            this.$store.dispatch('CloseError')
+            this.$store.commit('CLOSE_ERROR')
         }
     },
     computed: {
-        error() {
-            return this.$store.state.errorMassage
+        ERROR_MASSAGE() {
+            const status = this.$store.state.app.ERROR_MASSAGE;
+            let massage = "";
+            if (status === 400) massage = this.$t('errors.400');
+            if (status === 401) massage = this.$t('errors.401');
+            if (status === 500) massage = this.$t('errors.500');
+            if (status === 503) massage = this.$t('errors.503');
+            return massage
         },
     }
 }

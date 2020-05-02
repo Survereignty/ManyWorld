@@ -40,29 +40,22 @@ mongoClient.connect((err, client)=>{
     });
 });
 
-
+app.use(cors());
 
 app.use(express.static("public"));
 
 app.use(getPage);
-
-app.options('*', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "DELETE, PUT, UPDATE, HEAD, OPTIONS, GET, POST");
-  res.send('ok');
-});
 
 app.use(cors());
 
 app.use(API);
 
 r1.on("line", (input) => {
-    if (input.toLowerCase() == "закрыть"    || 
-        input.toLowerCase() == "завершить"  || 
+    if (input.toLowerCase() == "закрыть"    ||
+        input.toLowerCase() == "завершить"  ||
         input.toLowerCase() == "закончить"  ||
         input.toLowerCase() == "выход"      ||
-        input.toLowerCase() == "close"      || 
+        input.toLowerCase() == "close"      ||
         input.toLowerCase() == "pfrhsnm")
         {
             console.log("___ \n\nРаб молвит - Хорошего дня, хозяин! \n___");
