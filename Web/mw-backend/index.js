@@ -2,12 +2,14 @@ const express     = require("express");
 const app         = express();
 const json        = express.json();
 
+const cors = require("cors");
+
 const getPage       = require("./routes/getPage");
 const API           = require("./RestAPI/API");
 const User          = require("./module/user");
 
-const readline     	= require("readline");
-const r1         	= readline.createInterface({
+const readline  = require("readline");
+const r1        = readline.createInterface({
   input:     process.stdin,
   output:    process.stdout
 });
@@ -24,7 +26,7 @@ mongoClient.connect((err, client)=>{
     const db = client.db("usersdb");
     const collection = db.collection("users");
 
-    collection.findOne({ email: 'dio@gmail.com' }, (err, result) =>{
+    collection.findOne({ login: 'Владик' }, (err, result) =>{
         if (result === null)
             collection.insertOne(new User("Владик", "dio@gmail.com", 123456, 1), (err, result)=>{
                   
@@ -38,15 +40,13 @@ mongoClient.connect((err, client)=>{
     });
 });
 
+
+
 app.use(express.static("public"));
 
 app.use(getPage);
 
-app.options('*', (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set("Access-Control-Allow-Headers", "Content-Type");
-    res.send('ok');
-});
+app.use(cors());
 
 app.use(API);
 

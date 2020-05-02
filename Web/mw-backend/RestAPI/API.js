@@ -2,37 +2,27 @@ const express     = require("express");
 const app         = express();
 const json        = express.json();
 
+const MongoClient 	= require("mongodb").MongoClient;
+const url 			= "mongodb://localhost:27017/";
 
-const MongoClient = require("mongodb").MongoClient;
-const url = "mongodb://localhost:27017/";
+const errorList = require("./ErrorList");
+const user 		= require("../module/user");
 
-const errorList 	= require("./ErrorList");
-const user 			= require("../module/user");
+const JWTCreator 	= require("../JWT/jwt");
+const JWT 			= new JWTCreator("R1RLYYVB", "IR1RRLYYVB");
 
-
-const JWT 			= require("jsonwebtoken");
-const ac_signature 	= "R1RLYYVB";
-const ref_signature = "IR1RRLYYVB";
-const expiration 	= "4h";
-
-
-const VerefyToken = (req, res, next) => {
-	const bearerHeader = req.headers["authorization"];
-
-	if(typeof bearerHeader !== "undefined"){
-		JWT.verefy(req.body.token, ac_signature, (err, authData) => {
-			 if(err) res.sendStatus(403);
-			 next();
-		});
-	} else {
-		res.sendStatus(403);
-	}
-}; 
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../" + __dirname + "/public/img/" )
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname + " - " + Date.now());
+  }
+});
+const upload = multer({storage : storage});
 
 app.post("/authorization", json, (req, res) =>{
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.set('Access-Control-Allow-Headers', 'Content-Type')
 
     const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 
@@ -40,24 +30,14 @@ app.post("/authorization", json, (req, res) =>{
 	 
 	    const db = client.db("usersdb");
 	    const collection = db.collection("users");
-	    collection.findOne({ email: req.body.email }, (err, result) =>{
+	    collection.findOne({ login: req.body.login }, (err, result) =>{
 	        if (result === null)
-				if(req.body.lang == "ru")
-					res.json({
-						result  : false,
-						massage : errorList.ruFalseAut
-					});
-				else 
-					res.json({
-						result  : false,
-						massage : errorList.enFalseAut
-					});
-
+				res.sendStatus(401);
 	        else
 				if(	req.body.password == result.password){
 
-					result.ac_token = JWT.sign({name: result.name, email: result.email, role: result.role}, ac_signature, { expiresIn: expiration });
-					result.ref_token = JWT.sign({name: result.name, email: result.email, role: result.role}, ref_signature, { expiresIn: "30d" });
+					result.ac_token = JWT.Create({login: result.login, role: result.role}, { expiresIn: "1m" });
+					result.ref_token = JWT.CreateRefresh({login: result.login, role: result.role}, { expiresIn: "30d" });
 					if(req.body.lang == "ru")
 						res.json({
 							result  	: true,
@@ -78,34 +58,22 @@ app.post("/authorization", json, (req, res) =>{
 						});
 				}else{
 					
-					if(req.body.lang == "ru")
-						res.json({
-							result  : false,
-							massage : errorList.ruFalseAut
-						});
-					else 
-						res.json({
-							result  : false,
-							massage : errorList.enFalseAut
-						});
+					res.sendStatus(401);
 				}		
 			client.close();	
 		})
     });
 });
 
-app.post("/user", json, VerefyToken, (req, res)=> {
-	res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.set('Access-Control-Allow-Headers', 'Content-Type');
+app.post("/user", json, JWT.VerefyToken, (req, res)=> {
 
     const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 	mongoClient.connect((err, client)=>{
 	    const db = client.db("usersdb");
 	    const collection = db.collection("users");
-	    collection.findOne({ email: req.body.email }, (err, result) =>{
+	    collection.findOne({ login: req.body.login }, (err, result) =>{
 	        if (result === null){
-	            collection.insertOne(new User(req.body.name, req.body.email, req.body.password, req.body.role), (err, result)=>{
+	            collection.insertOne(new User(req.body.login, req.body.email, req.body.password, req.body.role), (err, result)=>{
 	                
 	                if(err) { 
 	                	console.log("Ошибка - " + err);
@@ -128,8 +96,22 @@ app.post("/user", json, VerefyToken, (req, res)=> {
 });
 
 
-app.post("/refresh", json, (req, res) => {
+app.post("/refresh", json, JWT.VerefyRefToken, (req, res) => {
 
+	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+
+	mongoClient.connect((err, client)=>{
+	 
+	    const db = client.db("usersdb");
+	    const collection = db.collection("users");
+	    collection.findOne({ login: req.body.login }, (err, result) =>{
+			res.json({
+				ac_token 	: JWT.Create({login: result.login, role: result.role}, { expiresIn: "1m" }),
+				ref_token	: JWT.CreateRefresh({login: result.login, role: result.role}, { expiresIn: "30d" })
+			})
+			client.close();	
+		})
+    });
 })
 
 module.exports = app;
