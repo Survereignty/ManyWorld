@@ -13,6 +13,9 @@ module.exports = class Token {
 		if(typeof bearerHeader !== "undefined"){
 			const bearer = bearerHeader.split(" ");
 
+			console.log(this);
+			console.log(this.ac_signature);
+			console.log(this.ref_signature);
 			JWT.verefy(bearer[1], this.ac_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
 				 console.log(authData);
