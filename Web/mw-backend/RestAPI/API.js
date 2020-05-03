@@ -102,8 +102,8 @@ app.route("/user")
 			            });
 		            }
 			        else {
-			        	if(req.body.lang == "ru") 			res.json({result  : true, massage : errorList.ruRAddUser});
-		                else 								res.json({result  : true, massage : errorList.enRAddUser});
+			        	if(req.body.lang == "ru") 			res.json({result  : false, massage : errorList.ruRAddUser});
+		                else 								res.json({result  : false, massage : errorList.enRAddUser});
 			        }
 			        client.close();
 			    });
