@@ -114,19 +114,16 @@ import {required, minLength} from 'vuelidate/lib/validators'
             put() {
                 this.$store.dispatch('PUT_USER', {
                     lang: this.$i18n.locale,
+                    oldLogin: this.SELECT_USER.login,
                     login: this.login,
                     email: this.email,
                     password: this.password,
                     role: this.role,
-                    Creator: this.USER_NAME,
                 })
                 this.$store.commit('CHANGE_EDIT_USER', false);
             },
         },
         computed: {
-            USER_NAME() {
-                return this.$store.state.user.USER_NAME
-            },
             SELECT_USER() {
                 return this.$store.state.app.SELECT_USER
             },

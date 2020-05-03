@@ -17,9 +17,9 @@ export default {
                 return item.login !== login
             });
         },
-        PUT_USER(state, user) {
+        PUT_USER(state, obj) {
             state.USERS.filter((item) => {
-                if (item.login === user.login) item = user;
+                if (item.login === obj.oldLogin) item = obj.user;
             });
         }
     },
@@ -111,20 +111,28 @@ export default {
             })
         },
         // Обновить пользователей
-        async PUT_USER({commit, dispatch}, {lang, login, email, password, role, Creator}) {
+        async PUT_USER({commit, dispatch}, {lang, login, oldLogin, email, password, role}) {
             commit('CHANGE_LOADING', true);
             await HTTP.put('user', {
-                update: {lang, login, email, password, role, Creator}
+                lang,
+                login: oldLogin,
+                update: {login, email, password, role}
             })
             .then(() => {
-                commit('PUT_USER', {login, email, password, role, Creator});
+                commit('PUT_USER', {
+                    oldLogin,
+                    user: {login, email, password, role}
+                });
                 commit('CHANGE_LOADING', false);
             })
             .catch((error) => {
                 if (error.response.status === 403) {
                     dispatch('REFRESH')
                     .then(() => {
-                        dispatch('PUT_USER', {lang, login, email, password, role, Creator})
+                        commit('PUT_USER', {
+                            oldLogin,
+                            user: {login, email, password, role}
+                        });
                     })
                     .catch((error) => {
                         commit('SET_ERROR', error.response.status);
