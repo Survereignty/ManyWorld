@@ -130,7 +130,8 @@ app.route("/user")
 		}
 	})
 	.delete(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
-		
+		console.log(req);
+
 		if(req.authData.role == 1){
 			
 			const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
@@ -139,8 +140,8 @@ app.route("/user")
 				
 				const db = client.db("usersdb");
 			    const collection = db.collection("users");
+			    collection.deleteOne(req.body.login, (err, result) => {
 
-			    collection.deleteOne(req.body.obj, (err, result) => {
 			    	if(err) SendRes(req, res, true, errorList.ruFDeleted, errorList.enFDeleted);
 			    	SendRes(req, res, true, errorList.ruDeleted, errorList.enDeleted);	
 			    });
@@ -161,8 +162,8 @@ app.route("/user")
 				const db = client.db("usersdb");
 			    const collection = db.collection("users");
 			    console.log(req.body);
-			    console.log(req.body.email);
-			    collection.updateOne(req.body.login, {$set: req.body.update}, (err, result) => {
+			    console.log(req.body.update.email);
+			    collection.updateOne({login: req.body.login}, {$set: req.body.update}, (err, result) => {
 			    	
 			    	if(!result) SendRes(req, res, false, errorList.ruFAddUser, errorList.enFAddUser);
 			    	res.sendStatus(200);
