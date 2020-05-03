@@ -1,0 +1,48 @@
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    background: $color-bg;
+    overflow: scroll;
+    thead {
+        border-bottom: 1px solid $color-text-main-dark;
+    }
+    tbody {
+        tr {
+            &:hover {
+                background: $color-bg-light;
+            }
+        }
+        .icons {
+            @include flex(null, null, center, center);
+            svg {
+                padding: 3px;
+            }
+        }
+    }
+    th, td {
+        text-align: center;
+        padding: 20px;
+        box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,1);
+        border: 1px solid $color-border-dark;
+    }
+    .t1 {
+        @media screen and (max-width: 1350px) {
+            display: none;
+        }
+    }
+    .t2 {
+        @media screen and (max-width: 750px) {
+            display: none;
+        }
+    }
+    .t3 {
+        @media screen and (max-width: 650px) {
+            display: none;
+        }
+    }
+    .t4 {
+        @media screen and (max-width: 475px) {
+            display: none;
+        }
+    }
+}

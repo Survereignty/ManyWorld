@@ -1,0 +1,31 @@
+@mixin flex($flex-direction: column, $flex-wrap: wrap, $justify-content: center, $align-items: center) {
+    display: flex;
+    flex-direction: $flex-direction;
+    flex-wrap: $flex-wrap;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+@mixin grid($columns, $row) {
+    display: grid;
+    grid-template-columns: $columns;
+    grid-template-rows: $row;
+}
+
+@mixin font($size, $weight) {
+    font-size: $size;
+    font-weight: $weight;
+}
+
+@mixin size($w : 100%, $h : 100%) {
+    width: $w;
+    height: $h;
+}
+
+@mixin position($top:  0, $right : 0, $bottom : 0, $left : 0) {
+    position: fixed;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}

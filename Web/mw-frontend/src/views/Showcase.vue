@@ -1,5 +1,5 @@
 <template>
-    <content @click="closeAll">
+    <content>
         <NotFound v-if="notFound"/>
         <transition-group v-if="!notFound" name="anim" tag="section">
             <Title :key="1" :title="$t('section.new')"></Title>
@@ -19,7 +19,7 @@
 <script>
     import NotFound from '@/components/Items/NotFound.vue'
     import Section  from '@/components/Items/Section.vue'
-    import Title    from '@/components/Items/Title.vue'
+    import Title    from '@/components/Title.vue'
     import AllItems from '@/components/Items/AllItems.vue'
 
     import img  from '@/assets/ahri.jpg'
@@ -48,7 +48,7 @@
         },
         data () {
             return {
-                tag: this.$router.currentRoute.params['id'],
+                tag: this.$router.currentRoute.params['id'] || 'home',
                 notFound: false,
                 items_one: [
                     {
@@ -161,6 +161,7 @@
         watch: {
             $route (toR) {
                 this.tag = toR.params['id']
+                if (!this.tag) this.tag = "home"
             }
         },
         methods: {
@@ -179,9 +180,6 @@
                     this.show = true;
                 })
                 .catch(error => this.$store.dispatch('SetError', error))
-            },
-            closeAll() {
-                this.$store.commit('CHANGE_MENU', false);
             }
         },
         created() {

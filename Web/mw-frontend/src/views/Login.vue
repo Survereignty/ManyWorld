@@ -1,12 +1,12 @@
 <template>
     <content>
         <section>
-            <div class="login-card">
-                <div class="login-title">
+            <div class="flex-card">
+                <div class="title">
                         {{$t('login.title')}}
                 </div>
-                <form class="login-form" @submit.prevent="auth">
-                    <div class="login-row">
+                <form @submit.prevent="auth">
+                    <div class="row">
                         <label for="login">{{$t('login.login')}}</label>
                         <input
                             id="login"
@@ -17,7 +17,7 @@
                             v-model="login"
                         >
                     </div>
-                    <div class="login-row">
+                    <div class="row">
                         <label for="password">{{$t('login.password')}}</label>
                         <input
                             id="password"
@@ -28,7 +28,7 @@
                             v-model="password"
                         >
                     </div>
-                    <div class="login-row">
+                    <div class="row">
                         <button
                             type="submit"
                             :disabled="$v.$invalid"
@@ -80,80 +80,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-    .login-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-radius: 5px;
-        padding: 30px;
-        background: #121212;
-        box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,1);
-        border: 1px solid #1d1d1d;
-        font-family: -apple-system,Ubuntu,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-        .login-title {
-            padding-bottom: 30px;
-            font-weight: 700;
-            font-size: 28px;
-        }
-        .login-form {
-        display: inherit;
-        flex-direction: inherit;
-        align-items: inherit;
-        .login-row {
-                display: inherit;
-                flex-direction: inherit;
-                padding: 20px;
-                .invalid-feedback {
-                    color:rgb(170, 0, 0);
-                }
-                .is-invalid {
-                    border: 1px solid rgb(170, 0, 0);
-                }
-                label {
-                    font-weight: 500;
-                    font-size: 20px;
-                    padding: 10px;
-                }
-                input {
-                    color: #f9f9f9;
-                    background: #252525;
-                    border: 1px solid #252525;
-                    border-radius: 5px;
-                    font-size: 20px;
-                    padding: 10px;
-                    box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,1);
-                }
-                button[disabled] {
-                    background: #414644;
-                    color: #5c5c5c;
-                    cursor: default;
-                    &:hover {
-                        background: #414644;
-                    }
-                    &:active {
-                        background: #414644;
-                    }
-                }
-                button {
-                    font-weight: 600;
-                    background: #42b983;
-                    border: 1px solid #1d1d1d;
-                    color: #f9f9f9;
-                    border-radius: 5px;
-                    font-size: 20px;
-                    padding: 10px 20px 10px 20px;
-                    box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
-                    cursor: pointer;
-                    &:hover {
-                        background: #5ce2a6;
-                    }
-                    &:active {
-                        background: #349167;
-                    }
-                }
-            }
-        }
-    }
-</style>

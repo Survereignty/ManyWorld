@@ -25,24 +25,15 @@
 
 <style lang="scss" scoped>
     div {
-        z-index: 3;
-        position: fixed;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        top: 0;
-        left: 0;
-
+        z-index: 8;
+        @include position(0, null, null, 0);
         i {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include flex(null, null, center, center);
             margin: 10px;
             padding: 10px;
             border-radius: 30px;
             &:active {
-                background: #42b983;
+                background: $color-main-dark;
             }
         }
     }

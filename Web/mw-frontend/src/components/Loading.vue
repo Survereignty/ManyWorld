@@ -6,17 +6,6 @@
 
 <script>
 export default {
-  name: 'Loading'
+    name: 'Loading'
 }
 </script>
-
-<style lang="scss" scoped>
-    .back-drop {
-        z-index: 3;
-        position: fixed;
-        display: flex;
-        width: 100%;
-        height: 100%;
-        background: rgba($color: #000000, $alpha: .5);
-    }
-</style>

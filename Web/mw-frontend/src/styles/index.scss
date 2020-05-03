@@ -1,0 +1,60 @@
+// @font-face {
+//     font-family: Ubuntu;
+//     src: url(../fonts/Ubuntu/Ubuntu-Medium.ttf);
+// }
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+
+// Отключаем отступы
+*{padding: 0; margin: 0;}
+
+// Настраиваем списки
+ol, ul  { list-style: none; }
+
+
+// Настройка ссылок и заголовков
+h1, h2, h3, h4, h5 ,h6 {
+    font-family: $ubuntu;
+}
+a {
+    font-family: $ubuntu;
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+// Настройка скроллига
+::-webkit-scrollbar { width: 3px; height: 3px;}
+::-webkit-scrollbar-thumb { height: 50px; background-color: $color-bg; border-radius: 3px;}
+::-webkit-scrollbar-button, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-corner, ::-webkit-resizer {
+    background-color: $color-bg;
+}
+
+html {
+    background: linear-gradient(to top, #0a0a0c, #11100e) no-repeat;
+    color: #c4b998;
+    min-height: 100%;
+    overflow: visible;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    font-family: $arial;
+    font-weight: 400;
+    font-size: 12pt;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+content {
+    padding-top: 60px;
+    @include flex(column, null, center, null);
+    section {
+        @include flex(null, wrap, center, center);
+        padding-bottom: 70px;
+    }
+}
+
+@import './components/cards.scss';
+@import './components/inputs.scss';
+@import './components/table.scss';

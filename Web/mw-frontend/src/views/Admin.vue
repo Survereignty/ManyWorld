@@ -1,48 +1,41 @@
 <template>
-    <content click="closeAll">
-        <Nav></Nav>
-        <section>
-            <Users v-show="tag === 'users'"></Users>
-        </section>
+    <content>
+        <Title :title="$t(`nav.${tag}`)"></Title>
+        <AdminNav/>
+        <Users      v-show="tag === 'users'"/>
+        <TableUsers v-show="tag === 'users'"/>
     </content>
 </template>
 
 <script>
-import Nav from '@/components/Admin/Nav'
-import Users from '@/components/Admin/Users'
+import AdminNav     from '@/components/Admin/AdminNav'
+import Users        from '@/components/Admin/Users'
+import Title        from '@/components/Title'
+import TableUsers   from '@/components/Admin/TableUsers.vue'
 
     export default {
         name: "Admin",
         metaInfo() {
             return {
-                title: this.$t('nav.settings'),
+                title: this.$t(`nav.${this.tag}`)
             }
         },
         data() {
             return {
-                tag: ''
+                tag: this.$router.currentRoute.params['id'] || 'settings',
             }
         },
         components: {
-            Nav,
-            Users
+            AdminNav,
+            Users,
+            TableUsers,
+            Title
         },
         watch: {
             $route (toR) {
                 this.tag = toR.params['id']
+                if (!this.tag) this.tag = "settings"
             }
         },
-        methods: {
-            closeAll() {
-                this.$store.commit('CHANGE_MENU', false);
-            }
-        }
     }
 </script>
-
-<style lang="scss" scoped>
-    .flex {
-        display: flex;
-        flex-direction: column;
-    }
-</style>

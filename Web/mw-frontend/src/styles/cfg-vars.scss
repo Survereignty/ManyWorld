@@ -1,0 +1,39 @@
+$DEV_MODE: $NODE_ENV == development;
+$MAX_INT32: 2147483647;
+
+@import "mixins";
+
+//==
+//== Color palette
+//== ======================================= ==//
+
+$color-bg-light: #252525;
+$color-bg: #121212;
+
+$color-main: #42b983;
+$color-main-light: #5ce2a6;
+$color-main-dark: #349167;
+
+$color-text-main: #f3e5bf;
+$color-text-main-dark: #c4b998;
+$color-text-white: #f9f9f9;
+
+$color-border-dark: #1d1d1d;
+
+$color-error: rgb(170, 0, 0);
+$color-warning: #FFA500;
+$color-error-light: rgb(224, 0, 0);
+$color-warning-light: rgb(252, 186, 63);
+$color-bg-disabled: #414644;
+$color-text-disabled: #5c5c5c;
+
+//==
+//== Fonts
+//== ======================================= ==//
+
+$ubuntu : -apple-system,Ubuntu,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+$arial  : -apple-system,Arial,Helvetica,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+
+
+
+

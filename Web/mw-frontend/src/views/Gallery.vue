@@ -1,5 +1,5 @@
 <template>
-    <content click="closeAll">
+    <content>
         <section>
             <h1>Gallery</h1>
         </section>
@@ -13,15 +13,6 @@
             return {
                 title: this.$t('nav.gallery')
             }
-        },
-        methods: {
-            closeAll() {
-                this.$store.commit('CHANGE_MENU', false);
-            }
         }
     }
 </script>
-
-<style lang="sass" scoped>
-
-</style>

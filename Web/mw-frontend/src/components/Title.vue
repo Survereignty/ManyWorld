@@ -19,12 +19,10 @@
 
 <style lang="scss" scoped>
 .flex {
-    display: flex;
-    justify-content: center;
+    @include flex(null, null, center, null);
     .grid {
-        display: grid;
-        width: 1170px;
-        grid-template-columns: 2fr 1fr 2fr;
+        @include grid(2.5fr 1fr 2.5fr, null);
+        @include size(1180px, null);
         text-align: center;
         div {
             border-bottom: 1px solid #7c5b08;

@@ -1,28 +1,49 @@
 <template>
-    <content click="closeAll">
+    <content>
         <section>
-            <Title :title="$t(`nav.create`)"></Title>
-            <div class="flex">
-                <label for="img">Картинка</label>
-                <input @change="previewFiles" id="img" type="file" name="img">
-                <label for="size">Размер</label>
-                <input v-model="size" id="size" type="number" name="size">
-                <label for="x">X</label>
-                <input v-model="x" id="x" type="number" name="x">
-                <label for="y">Y</label>
-                <input v-model="y" id="y" type="number" name="y">
-                <label for="name">Имя</label>
-                <input v-model="name" id="name" type="text" name="name">
-                <label for="tag">Тег</label>
-                <input v-model="tag" id="tag" type="text" name="tag">
-                <button @click="setItem">Готово</button>
+            <div class="flex-card">
+                <div class="title">
+                        {{$t(`nav.create`)}}
+                </div>
+                <form @submit.prevent="setItem">
+                    <div class="row">
+                        <label for="img">Картинка</label>
+                        <input @change="previewFiles" id="img" type="file" name="img">
+                    </div>
+                    <div class="row">
+                        <label for="size">Размер</label>
+                        <input v-model="size" id="size" type="number" name="size">
+                    </div>
+                    <div class="row">
+                        <label for="x">X</label>
+                        <input v-model="x" id="x" type="number" name="x">
+                    </div>
+                    <div class="row">
+                        <label for="y">Y</label>
+                        <input v-model="y" id="y" type="number" name="y">
+                    </div>
+                    <div class="row">
+                        <label for="name">Имя</label>
+                        <input v-model="name" id="name" type="text" name="name">
+                    </div>
+                    <div class="row">
+                        <label for="tag">Тег</label>
+                        <input v-model="tag" id="tag" type="text" name="tag">
+                    </div>
+                    <div class="row">
+                        <button
+                            type="submit"
+                        >
+                        {{$t('nav.create')}}
+                        </button>
+                    </div>
+                </form>
             </div>
         </section>
     </content>
 </template>
 
 <script>
-    import Title    from '@/components/Items/Title.vue'
 
     export default {
         name: "Create",
@@ -41,13 +62,7 @@
                 y: 0
             }
         },
-        components: {
-            Title
-        },
         methods: {
-            closeAll() {
-                this.$store.commit('CHANGE_MENU', false);
-            },
             previewFiles(event) {
                 this.img = event.target.files;
             },
@@ -66,10 +81,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .flex {
-        display: flex;
-        flex-direction: column;
-    }
-</style>
