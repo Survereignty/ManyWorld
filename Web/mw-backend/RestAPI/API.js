@@ -87,7 +87,7 @@ app.route("/user")
 			    const collection = db.collection("users");
 			    collection.find().toArray((err, result) => {
 			        res.json({
-			        	users: result
+			        	users: result.reverse()
 			        })
 			        client.close()
 			    });
@@ -140,7 +140,7 @@ app.route("/user")
 				
 				const db = client.db("usersdb");
 			    const collection = db.collection("users");
-			    collection.deleteOne(req.body.login, (err, result) => {
+			    collection.deleteOne({login: req.body.login}, (err, result) => {
 
 			    	if(err) SendRes(req, res, true, errorList.ruFDeleted, errorList.enFDeleted);
 			    	SendRes(req, res, true, errorList.ruDeleted, errorList.enDeleted);	
