@@ -13,7 +13,6 @@ module.exports = class Token {
 			JWT.verify(bearer[1], this.ac_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
 				 req.authData = authData;
-				 console.log(authData);
 				 next();
 			});
 		} else {
@@ -29,7 +28,6 @@ module.exports = class Token {
 
 			JWT.verify(bearer[1], this.ref_signature, (err, authData) => {
 				 if(err) return res.sendStatus(403);
-				 console.log(authData);
 				 req.authData = authData;
 				 next();
 			});

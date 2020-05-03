@@ -14,15 +14,18 @@ const JWT 			= new JWTCreator("R1RLYYVB", "IR1RRLYYVB");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../" + __dirname + "/public/img/" )
+  	req.DirImg = "../" + __dirname + "/public/img/";
+    cb(null, req.DirImg )
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname + " - " + Date.now());
+  	date += file.originalname + " - " + Date.now();
+  	req.DirImg += date; 
+    cb(null, date);
   }
 });
 const upload = multer({storage : storage});
 
-const SendRes = (res, resul, ru, en) => {
+const SendRes = (req, res, resul, ru, en) => {
 	if(req.body.lang == "ru")		res.json({result  : resul, massage : ru});
     else 							res.json({result  : resul, massage : en});
 };
@@ -73,19 +76,25 @@ app.post("/authorization", json, (req, res) =>{
 
 app.route("/user")
 	.get(JWT.VerefyToken.bind(JWT), (req, res) => {
-		const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 
-	    mongoClient.connect((err, client)=>{
+		if(req.authData.role == 1){
 
-		    const db = client.db("usersdb");
-		    const collection = db.collection("users");
-		    collection.find().toArray((err, result) => {
-		        res.json({
-		        	users: result
-		        })
-		        client.close()
-		    });
-		});
+			const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+
+		    mongoClient.connect((err, client)=>{
+
+			    const db = client.db("usersdb");
+			    const collection = db.collection("users");
+			    collection.find().toArray((err, result) => {
+			        res.json({
+			        	users: result
+			        })
+			        client.close()
+			    });
+			});
+		} else {
+			SendRes(req, res, false, errorList.ruLowUser, errorList.enLowUser);
+		}
 	})
 	.post(json, JWT.VerefyToken.bind(JWT), (req, res)=> {
 		if(req.authData.role == 1){
@@ -104,20 +113,20 @@ app.route("/user")
 			              
 			                if(err) { 
 			                	console.log("Ошибка - " + err);
-			                	SendRes(res, false, errorList.ruFAddUser, errorList.enFAddUser);
+			                	SendRes(req, res, false, errorList.ruFAddUser, errorList.enFAddUser);
 							}	
 			                
-			                SendRes(res, true, errorList.ruTAddUser, errorList.enTAddUser);
+			                SendRes(req, res, true, errorList.ruTAddUser, errorList.enTAddUser);
 			            	client.close();
 			            });
 		            }
 			        else
-			        	SendRes(res, false, errorList.ruRAddUser, errorList.enRAddUser);
+			        	SendRes(req, res, false, errorList.ruRAddUser, errorList.enRAddUser);
 			        client.close();
 			    });
 			});
 		} else {
-			SendRes(res, false, errorList.ruLowUser, errorList.enLowUser);
+			SendRes(req, res, false, errorList.ruLowUser, errorList.enLowUser);
 		}
 	})
 	.delete(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
@@ -130,10 +139,15 @@ app.route("/user")
 				
 				const db = client.db("usersdb");
 			    const collection = db.collection("users");
-			    collection.deleteOne(req.body.obj, (err, result) => client.close());
+
+			    collection.deleteOne(req.body.obj, (err, result) => {
+			    	if(err) SendRes(req, res, true, errorList.ruFDeleted, errorList.enFDeleted);
+			    	SendRes(req, res, true, errorList.ruDeleted, errorList.enDeleted);	
+			    });
+				client.close();	    
 			})
 		} else {
-			SendRes(res, false, errorList.ruLowUser, errorList.enLowUser);
+			SendRes(req, res, false, errorList.ruLowUser, errorList.enLowUser);
 		}
 	})
 	.put(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
@@ -146,15 +160,16 @@ app.route("/user")
 				
 				const db = client.db("usersdb");
 			    const collection = db.collection("users");
-
+			    console.log(req.body);
+			    console.log(req.body.email);
 			    collection.updateOne(req.body.login, {$set: req.body.update}, (err, result) => {
 			    	
-			    	if(!result) SendRes(res, false, errorList.ruFAddUser, errorList.enFAddUser);
+			    	if(!result) SendRes(req, res, false, errorList.ruFAddUser, errorList.enFAddUser);
 			    	res.sendStatus(200);
 			    });
 			})
 		} else {
-			SendRes(res, false, errorList.ruLowUser, errorList.enLowUser);
+			SendRes(req, res, false, errorList.ruDeleted, errorList.enDeleted);
 		}
 	})
 
@@ -165,5 +180,60 @@ app.get("/refresh", JWT.VerefyRefToken.bind(JWT), (req, res) => {
 	});
 })
 
+app.route("/item")
+	.get(JWT.VerefyToken.bind(JWT), (req, res) => {
+		if(req.authData.role == 1)
+		{
+			const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+
+		    mongoClient.connect((err, client)=>{
+
+			    const db = client.db("usersdb");
+			    const collection = db.collection("items");
+			    
+			    collection.find().toArray((err, result) => {
+			        res.json({
+			        	users: result
+			        })
+			        client.close()
+			    });
+			});
+		}
+	    else 
+	    	SendRes(req, res, false, errorList.ruLowUser, errorList.enLowUser);
+	})
+	.post(json, JWT.VerefyToken.bind(JWT), (req, res)=> {
+		if(req.authData.role == 1){
+
+	    	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+
+			mongoClient.connect((err, client)=>{
+
+			    const db = client.db("usersdb");
+			    const collection = db.collection("items");
+
+			    collection.findOne({ name: req.body.name }, (err, result) =>{
+			        
+			        if (!result){
+			            collection.insertOne(new User(req.body.name, req.body.prt, req.body.tag, req.body.img), (err, result)=>{
+			              
+			                if(err) { 
+			                	console.log("Ошибка - " + err);
+			                	SendRes(req, res, false, errorList.ruFAddUser, errorList.enFAddUser);
+							}	
+			                
+			                SendRes(req, res, true, errorList.ruTAddUser, errorList.enTAddUser);
+			            	client.close();
+			            });
+		            }
+			        else
+			        	SendRes(req, res, false, errorList.ruRAddUser, errorList.enRAddUser);
+			        client.close();
+			    });
+			});
+		} else {
+			SendRes(req, res, false, errorList.ruLowUser, errorList.enLowUser);
+		}
+	})
 
 module.exports = app;

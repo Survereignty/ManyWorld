@@ -9,4 +9,8 @@ module.exports = {
 	ruRAddUser 	: "Такой пользователь уже существует",
 	enLowUser	: "Not enough rights",
 	ruLowUser	: "Не достаточно прав",
+	enDeleted 	: "User deleted",
+	ruDeleted 	: "Пользователь удален",
+	enFDeleted 	: "Delete Error",
+	ruFDeleted 	: "Ошибка удаления"
 };
