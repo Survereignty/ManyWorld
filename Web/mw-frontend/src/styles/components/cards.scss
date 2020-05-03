@@ -25,6 +25,32 @@
     }
 }
 
+.flex-page-card {
+    @include flex(column, null, center, center);
+    border-radius: 5px;
+    padding: 30px;
+    background: $color-bg;
+    box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,1);
+    border: 1px solid $color-border-dark;
+    font-family: $ubuntu;
+    .title {
+        @include font(28px, 700);
+    }
+    .row {
+        @include flex(column, null, null, center);
+        padding: 20px;
+    }
+    .column {
+        @include flex(row, wrap, center, center);
+        padding: 20px;
+    }
+    .btns {
+        button {
+            margin: 0px 10px 0px 10px;
+        }
+    }
+}
+
 .small {
     .row {
         padding: 10px;

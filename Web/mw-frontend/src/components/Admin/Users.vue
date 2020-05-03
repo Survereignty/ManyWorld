@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="flex-card">
+        <div class="flex-page-card">
                 <form @submit.prevent="CreateUser">
                     <div class="row">
                         <label for="login">{{$t('login.login')}}</label>

@@ -85,7 +85,7 @@ export default {
         async DELETE_USER({commit, dispatch}, {lang, login}) {
             commit('CHANGE_LOADING', true);
             await HTTP.delete('user', {
-                lang, login
+                data: {lang, login}
             })
             .then(() => {
                 commit('DEL_USER', login);
