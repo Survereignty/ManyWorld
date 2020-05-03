@@ -22,6 +22,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({storage : storage});
 
+const SendRes = (res, resul, ru, en) => {
+	if(req.body.lang == "ru")		res.json({result  : resul, massage : ru});
+    else 							res.json({result  : resul, massage : en});
+};
+
 app.post("/authorization", json, (req, res) =>{
 
     const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
@@ -71,63 +76,85 @@ app.route("/user")
 		const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 
 	    mongoClient.connect((err, client)=>{
+
 		    const db = client.db("usersdb");
 		    const collection = db.collection("users");
 		    collection.find().toArray((err, result) => {
 		        res.json({
 		        	users: result
 		        })
+		        client.close()
 		    });
 		});
 	})
 	.post(json, JWT.VerefyToken.bind(JWT), (req, res)=> {
 		if(req.authData.role == 1){
+
 	    	const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+
 			mongoClient.connect((err, client)=>{
+
 			    const db = client.db("usersdb");
 			    const collection = db.collection("users");
+
 			    collection.findOne({ login: req.body.login }, (err, result) =>{
+			        
 			        if (!result){
 			            collection.insertOne(new User(req.body.login, "NON", req.body.password, req.body.role, req.body.Creator), (err, result)=>{
 			              
 			                if(err) { 
 			                	console.log("Ошибка - " + err);
-			                	
-			                	if(req.body.lang == "ru") 	res.json({result  : false, massage : errorList.ruFAddUser});
-			                	else 						res.json({result  : false, massage : errorList.enFAddUser});
+			                	SendRes(res, false, errorList.ruFAddUser, errorList.enFAddUser);
 							}	
-			                client.close();
-			                if(req.body.lang == "ru")		res.json({result  : true, massage : errorList.ruTAddUser});
-			                else 							res.json({result  : true, massage : errorList.enTAddUser});
+			                
+			                SendRes(res, true, errorList.ruTAddUser, errorList.enTAddUser);
+			            	client.close();
 			            });
 		            }
-			        else {
-			        	if(req.body.lang == "ru") 			res.json({result  : false, massage : errorList.ruRAddUser});
-		                else 								res.json({result  : false, massage : errorList.enRAddUser});
-			        }
+			        else
+			        	SendRes(res, false, errorList.ruRAddUser, errorList.enRAddUser);
 			        client.close();
 			    });
 			});
 		} else {
-			if(req.body.lang == "ru")
-				res.json({result: false, massage : errorList.ruLowUser});
-			else 
-				res.json({result: false, massage : errorList.enLowUser});
+			SendRes(res, false, errorList.ruLowUser, errorList.enLowUser);
 		}
 	})
 	.delete(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
+		
 		if(req.authData.role == 1){
+			
 			const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+			
 			mongoClient.connect((err, client)=>{
+				
 				const db = client.db("usersdb");
 			    const collection = db.collection("users");
 			    collection.deleteOne(req.body.obj, (err, result) => client.close());
 			})
 		} else {
-			if(req.body.lang == "ru")
-				res.json({result: false, massage : errorList.ruRAddUser});
-			else 
-				res.json({result: false, massage : errorList.enLowUser});
+			SendRes(res, false, errorList.ruLowUser, errorList.enLowUser);
+		}
+	})
+	.put(json, JWT.VerefyToken.bind(JWT), (req, res)=>{
+		
+		if(req.authData.role == 1){
+			
+			const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
+			
+			mongoClient.connect((err, client)=>{
+				
+				const db = client.db("usersdb");
+			    const collection = db.collection("users");
+
+			    collection.updateOne(req.body.login, {$set: req.body.update}, (err, result) => {
+			    	
+			    	if(!result) SendRes(res, false, errorList.ruFAddUser, errorList.enFAddUser);
+			    	res.sendStatus(200);
+			    });
+			})
+		} else {
+			SendRes(res, false, errorList.ruLowUser, errorList.enLowUser);
 		}
 	})
 
