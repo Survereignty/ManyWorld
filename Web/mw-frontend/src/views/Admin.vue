@@ -2,8 +2,10 @@
     <content>
         <Title :title="$t(`nav.${tag}`)"></Title>
         <AdminNav/>
-        <Users      v-show="tag === 'users'"/>
-        <TableUsers v-show="tag === 'users'"/>
+        <Users          v-show="tag === 'users'"/>
+        <EditingUser    v-if="EDIT_USER"/>
+        <TableUsers     v-show="tag === 'users'"/>
+        <Settings       v-show="tag === 'settings'"/>
     </content>
 </template>
 
@@ -12,6 +14,8 @@ import AdminNav     from '@/components/Admin/AdminNav'
 import Users        from '@/components/Admin/Users'
 import Title        from '@/components/Title'
 import TableUsers   from '@/components/Admin/TableUsers.vue'
+import Settings   from '@/components/Admin/Settings.vue'
+import EditingUser   from '@/components/Admin/EditingUser.vue'
 
     export default {
         name: "Admin",
@@ -29,7 +33,9 @@ import TableUsers   from '@/components/Admin/TableUsers.vue'
             AdminNav,
             Users,
             TableUsers,
-            Title
+            Title,
+            Settings,
+            EditingUser
         },
         watch: {
             $route (toR) {
@@ -37,5 +43,10 @@ import TableUsers   from '@/components/Admin/TableUsers.vue'
                 if (!this.tag) this.tag = "settings"
             }
         },
+        computed: {
+            EDIT_USER() {
+                return this.$store.state.app.EDIT_USER
+            }
+        }
     }
 </script>

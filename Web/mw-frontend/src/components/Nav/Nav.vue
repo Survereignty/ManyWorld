@@ -15,7 +15,6 @@
             <router-link active-class="active" :to="`/${$i18n.locale}/stories`">    {{$t('nav.stories')}}   </router-link>
             <router-link active-class="active" :to="`/${$i18n.locale}/projects`">   {{$t('nav.projects')}}  </router-link>
             <router-link active-class="active" :to="`/${$i18n.locale}/gallery`">    {{$t('nav.gallery')}}  </router-link>
-            <router-link active-class="active" :to="`/${$i18n.locale}/login`">    login  </router-link>
         </div>
     </nav>
 </template>

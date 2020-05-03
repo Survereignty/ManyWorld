@@ -54,7 +54,7 @@ export default {
     },
     data () {
         return {
-            login: 'Владик',
+            login: 'Fucking Vladick Slave',
             password: '123456'
         }
     },

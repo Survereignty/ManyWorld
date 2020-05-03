@@ -10,8 +10,12 @@
         "email"     :   "Email"
     },
     "error": {
-        "title":  "There was a mistake!",
-        "next":   "OK"
+        "title":    "There was a mistake!",
+        "next":     "OK",
+        "warning":  "Warning!",
+        "warning_text": "Are you sure?",
+        "yes": "Yes",
+        "no": "No"
     },
     "settings": {
         "exit": "Exit",
@@ -20,8 +24,8 @@
     "nav": {
         "create"    :   "Create",
         "close"     :   "Close",
-        "delete"    :   "delete",
-        "update"    :   "update",
+        "delete"    :   "Delete",
+        "update"    :   "Update",
         "home"      :   "Home",
         "worlds"    :   "Worlds",
         "fractions" :   "Fractions",

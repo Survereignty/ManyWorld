@@ -6,6 +6,13 @@ export default {
         LOADING:        false,
         MENU:           false,
         NAV:            false,
+        EDIT_USER:      false,
+        SELECT_USER:    {},
+        WARNING:        false,
+        WARNING_FUNC:   {
+            name: "",
+            obj: {}
+        }
     },
     mutations: {
         // Установить и показать ошибку
@@ -28,6 +35,26 @@ export default {
         // Открыть или закрыть навигацию
         CHANGE_NAV(state, bool) {
             state.NAV               = bool;
-        }
+        },
+        // Открыть или закрыть окно редактирование пользователя
+        CHANGE_EDIT_USER(state, bool) {
+            state.EDIT_USER         = bool;
+        },
+        // Выбрать пользователя на редактирование
+        SET_SELECT_USER(state, obj) {
+            state.SELECT_USER        = obj;
+        },
+        // Открыть или закрыть окно предупреждения
+        CHANGE_WARNING(state, bool) {
+            state.WARNING         = bool;
+        },
+        // Назначить функцию для окна предупреждения
+        SET_WARNING(state, {name, obj}) {
+            state.WARNING_FUNC      = {
+                name,
+                obj
+            };
+            state.WARNING           = true;
+        },
     }
 }

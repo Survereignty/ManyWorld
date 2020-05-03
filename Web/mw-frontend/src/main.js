@@ -11,13 +11,14 @@ import VueMeta from 'vue-meta'
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  let language = to.params.lang;
-  if (!language) {
-    language = 'ru'
-  }
 
-  i18n.locale = language
-  next()
+    let language = localStorage.getItem('lang') || to.params.lang;
+    if (!language) {
+        language = 'ru'
+    }
+
+    i18n.locale = language
+    next()
 })
 
 Vue.use(Vuelidate);

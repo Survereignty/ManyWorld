@@ -14,6 +14,7 @@
 
     <!-- Блок ошибки -->
     <Error      v-show="ERROR"/>
+    <Warning    v-show="WARNING"/>
 
     <BackDrop   v-show="NAV & APP_MOBILE"/>
 
@@ -31,6 +32,7 @@ import SwitchNav from '@/components/Nav/SwitchNav.vue'
 import BackDrop from '@/components/BackDrop.vue'
 import Loading from '@/components/Loading.vue'
 import Error from '@/components/Error.vue'
+import Warning from '@/components/Warning.vue'
 
 export default {
     components: {
@@ -40,7 +42,8 @@ export default {
         SwitchNav,
         Loading,
         Error,
-        BackDrop
+        BackDrop,
+        Warning
     },
     computed: {
         LOGIN() {
@@ -60,6 +63,9 @@ export default {
         },
         APP_MOBILE() {
             return this.$store.state.app.APP_MOBILE
+        },
+        WARNING() {
+            return this.$store.state.app.WARNING
         },
     }
 }
