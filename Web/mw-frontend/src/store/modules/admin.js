@@ -13,13 +13,14 @@ export default {
             state.USERS.unshift(user);
         },
         DEL_USER(state, login) {
-            state.USERS.filter((item) => {
+            state.USERS = state.USERS.filter((item) => {
                 return item.login !== login
             });
         },
-        PUT_USER(state, obj) {
-            state.USERS.filter((item) => {
-                if (item.login === obj.oldLogin) item = obj.user;
+        PUT_USER(state, {oldLogin, user}) {
+            state.USERS = state.USERS.map((item) => {
+                if (item.login === oldLogin) return user;
+                return item;
             });
         }
     },
